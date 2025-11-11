@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - InfluPromo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>🎁 InfluPromo</h1>
+            <h2 id="authTitle">Connexion</h2>
+            
+            <!-- Formulaire de connexion -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-primary">Se connecter</button>
+            </form>
+
+            <!-- Formulaire d'inscription -->
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label for="regName">Nom</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Mot de passe (min. 6 caractères)</label>
+                    <input type="password" id="regPassword" required minlength="6">
+                </div>
+                <button type="submit" class="btn-primary">S'inscrire</button>
+            </form>
+
+            <div class="separator">OU</div>
+
+            <!-- Bouton Google Sign-In -->
+            <div id="g_id_onload"
+                 data-client_id="TON_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+                 data-callback="handleGoogleLogin">
+            </div>
+            <div class="g_id_signin" data-type="standard"></div>
+
+            <div class="auth-switch">
+                <p id="switchText">Pas encore de compte ? <a href="#" id="switchBtn">S'inscrire</a></p>
+                <p><a href="index.html">← Retour à l'accueil</a></p>
+            </div>
+
+            <div id="authMessage" class="message"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

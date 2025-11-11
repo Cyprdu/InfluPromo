@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfluPromo - Tous les codes promos des influenceurs</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <h1>🎁 InfluPromo</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="index.html">Accueil</a>
+                    <a href="#" id="exclusivesLink" style="display: none;">Exclusivités</a>
+                    <button class="btn-login" id="loginBtn">Se connecter</button>
+                    <button class="btn-primary" id="addPromoBtn" style="display: none;">Ajouter un code</button>
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <span id="userName"></span>
+                        <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Bannière publicitaire haute -->
+    <div class="ad-container ad-top">
+        <!-- Google AdSense - Bannière horizontale -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="YYYYYYYYYY"
+             data-ad-format="horizontal"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <main class="container">
+        <!-- Section recherche et filtres -->
+        <section class="search-section">
+            <h2>Trouve ton code promo</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Rechercher un code, une marque, un influenceur...">
+                <button id="searchBtn">🔍 Rechercher</button>
+            </div>
+            
+            <div class="filters">
+                <select id="influencerFilter">
+                    <option value="">Tous les influenceurs</option>
+                </select>
+                <select id="brandFilter">
+                    <option value="">Toutes les marques</option>
+                </select>
+                <button id="resetFilters">Réinitialiser</button>
+            </div>
+        </section>
+
+        <div class="content-wrapper">
+            <!-- Sidebar avec pub -->
+            <aside class="sidebar-left">
+                <div class="ad-container ad-sidebar">
+                    <!-- Google AdSense - Sidebar vertical -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-XXXXXXXXXX"
+                         data-ad-slot="ZZZZZZZZZZ"
+                         data-ad-format="vertical"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </aside>
+
+            <!-- Section codes promos -->
+            <section class="promos-section">
+                <h2>Codes promo disponibles</h2>
+                <div id="promosContainer" class="promos-grid">
+                    <!-- Les codes promos seront chargés ici -->
+                    <div class="loading">Chargement des codes promos...</div>
+                </div>
+            </section>
+
+            <!-- Sidebar droite avec pub -->
+            <aside class="sidebar-right">
+                <div class="ad-container ad-sidebar">
+                    <!-- Google AdSense - Sidebar vertical -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-XXXXXXXXXX"
+                         data-ad-slot="AAAAAAAAAA"
+                         data-ad-format="vertical"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Bannière publicitaire basse -->
+    <div class="ad-container ad-bottom">
+        <!-- Google AdSense - Bannière horizontale -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="BBBBBBBBBB"
+             data-ad-format="horizontal"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 InfluPromo - Tous droits réservés</p>
+            <div class="footer-links">
+                <a href="#">Mentions légales</a>
+                <a href="#">CGU</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Ajout Promo -->
+    <div id="addPromoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ajouter un code promo</h2>
+            <form id="addPromoForm">
+                <div class="form-group">
+                    <label for="promoCode">Code promo*</label>
+                    <input type="text" id="promoCode" required placeholder="Ex: PROMO20">
+                </div>
+                <div class="form-group">
+                    <label for="promoDescription">Description*</label>
+                    <textarea id="promoDescription" required placeholder="Décris l'offre..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="promoDiscount">Réduction*</label>
+                    <input type="text" id="promoDiscount" required placeholder="Ex: -20%">
+                </div>
+                <div class="form-group">
+                    <label for="promoInfluencer">Influenceur*</label>
+                    <input type="text" id="promoInfluencer" required placeholder="Nom de l'influenceur">
+                </div>
+                <div class="form-group">
+                    <label for="promoBrand">Marque*</label>
+                    <input type="text" id="promoBrand" required placeholder="Nom de la marque">
+                </div>
+                <div class="form-group">
+                    <label for="promoExpiry">Date d'expiration*</label>
+                    <input type="date" id="promoExpiry" required>
+                </div>
+                <button type="submit" class="btn-primary">Soumettre</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

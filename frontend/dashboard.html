@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon compte - InfluPromo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <h1>🎁 InfluPromo</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="index.html">Accueil</a>
+                    <a href="dashboard.html">Mon compte</a>
+                    <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Mon compte</h2>
+        
+        <div class="dashboard-section">
+            <h3>Mes informations</h3>
+            <div id="userInfo">
+                <p><strong>Nom :</strong> <span id="userNameDash"></span></p>
+                <p><strong>Email :</strong> <span id="userEmailDash"></span></p>
+                <p><strong>Statut :</strong> <span id="userStatus"></span></p>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Mes codes promos ajoutés</h3>
+            <div id="myPromosContainer">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Codes exclusifs</h3>
+            <p class="info-text">🎁 Accède aux codes promos exclusifs réservés aux membres !</p>
+            <div id="exclusivePromosContainer">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 InfluPromo - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
