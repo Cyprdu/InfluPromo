@@ -1,47 +1,47 @@
 [
   {
-    "nomMarque": "Nike",
-    "description": "15% de réduction sur toute la collection automne-hiver avec le code exclusif. Valable sur tous les articles de sport et lifestyle.",
-    "estCodePromo": true,
-    "codePromo": "NIKE15",
-    "lienPromo": "",
-    "urlChaineInfluenceur": "https://youtube.com/@sportech",
-    "logoInfluenceur": "https://i.pravatar.cc/150?img=12",
-    "nomInfluenceur": "SportTech",
-    "dateExpiration": "2024-12-31"
+    "nomMarque": "Revolut",
+    "description": "Téléchargez gratuitement Revolut avec ce lien pour recevoir 35 €.",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://get.revolut.com/z4lF/Instinct",
+    "urlChaineInfluenceur": "https://www.youtube.com/@inoxtag",
+    "logoInfluenceur": "https://yt3.ggpht.com/ytc/AIdro_nBv_ScBglsYmGLCeX8gG5E7_rC-p9M0I4hQAcEMaHjJa4=s88-c-k-c0x00ffffff-no-rj",
+    "nomInfluenceur": "Inoxtag",
+    "dateExpiration": "2025-11-24"
   },
   {
-    "nomMarque": "Nike",
-    "description": "Livraison gratuite sur votre première commande sans minimum d'achat. Profitez-en pour découvrir nos nouveautés!",
-    "estCodePromo": true,
-    "codePromo": "NIKEFREE",
+    "nomMarque": "Revolut",
+    "description": "Vous pourrez obtenir 20 € et participer au tirage au sort pour gagner 5 000 € ! Voir conditions générales. Collaboration commerciale.",
+    "estCodePromo": false,
+    "codePromo": "https://get.revolut.com/z4lF/AMixem",
     "lienPromo": "",
     "urlChaineInfluenceur": "https://youtube.com/@runningpro",
-    "logoInfluenceur": "https://i.pravatar.cc/150?img=33",
-    "nomInfluenceur": "Running Pro",
-    "dateExpiration": "2024-11-30"
+    "logoInfluenceur": "https://get.revolut.com/z4lF/AMixem",
+    "nomInfluenceur": "Amixem",
+    "dateExpiration": "2025-11-24"
   },
   {
-    "nomMarque": "Adidas",
-    "description": "Offre exclusive : 20% sur les sneakers avec ce lien spécial. Collection limitée disponible uniquement via ce partenariat.",
+    "nomMarque": "Revolut",
+    "description": "Vous pourrez obtenir 20 € et participer au tirage au sort pour gagner 5 000 €",
     "estCodePromo": false,
     "codePromo": "",
-    "lienPromo": "https://adidas.com/promo/sneakers",
+    "lienPromo": "https://get.revolut.com/z4lF/JoyCa",
     "urlChaineInfluenceur": "https://youtube.com/@sneakerhead",
-    "logoInfluenceur": "https://i.pravatar.cc/150?img=45",
-    "nomInfluenceur": "Sneaker Head",
-    "dateExpiration": "2024-12-15"
+    "logoInfluenceur": "https://yt3.ggpht.com/F5R-8dCR4OsDu1Rs_2RE20e6LUNFDJW6VemSqToit8XvdfoSj1DXJXb0Dc4aT_YEv-5TsFCF=s88-c-k-c0x00ffffff-no-rj",
+    "nomInfluenceur": "Joyca",
+    "dateExpiration": "2025-11-24"
   },
   {
-    "nomMarque": "Amazon",
-    "description": "30 jours d'essai gratuit Amazon Prime + 5€ offerts sur votre première commande. Accédez à des milliers de films et séries.",
-    "estCodePromo": false,
-    "codePromo": "",
+    "nomMarque": "Boucherie Raynaud",
+    "description": "Avec ce code, vous avez -10% sur votre commande à la boucherie Raynaud les 13 et 14 novembre 2025 - Collaboration non commerciale",
+    "estCodePromo": true,
+    "codePromo": "MCFLYETCARLITO",
     "lienPromo": "https://amazon.fr/prime/offer",
     "urlChaineInfluenceur": "https://youtube.com/@techreview",
     "logoInfluenceur": "https://i.pravatar.cc/150?img=8",
     "nomInfluenceur": "Tech Review",
-    "dateExpiration": "2024-12-31"
+    "dateExpiration": "2025-11-14"
   },
   {
     "nomMarque": "Sephora",
