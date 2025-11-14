@@ -121,15 +121,27 @@
   },
 
   {
-    "nomMarque": "Spotify",
-    "description": "3 mois de Spotify Premium gratuits pour les nouveaux abonnés. Musique illimitée sans publicité.",
-    "estCodePromo": false,
-    "codePromo": "",
-    "lienPromo": "https://spotify.com/premium/offer",
-    "urlChaineInfluenceur": "https://youtube.com/@musiclover",
-    "logoInfluenceur": "https://i.pravatar.cc/150?img=42",
-    "nomInfluenceur": "Music Lover",
-    "dateExpiration": "2024-11-15",
-    "Url": ""
+    "nomMarque": "HOLY",
+    "description": "Avec ce code, profitez de 5€ de réduction.",
+    "estCodePromo": true,
+    "codePromo": "AMIXEM5",
+    "lienPromo": "https://fr.weareholy.com/Amixem/Youtube",
+    "urlChaineInfluenceur": "https://www.youtube.com/@Amixem",
+    "logoInfluenceur": "https://yt3.ggpht.com/mkxR4YNTUBJAjuq020488wM8yHSCZ4Kwn0etJyYyGTL86LnEiIzu5uhw8EwmPpRxavKYXyQ4Hmk=s88-c-k-c0x00ffffff-no-rj",
+    "nomInfluenceur": "Amixem",
+    "dateExpiration": "2025-12-31",
+    "Url": "https://fr.weareholy.com/Amixem/Youtube"
+  },
+    {
+    "nomMarque": "HOLY",
+    "description": "Profitez de 10% de réduction sur toutes les commandes.",
+    "estCodePromo": true,
+    "codePromo": "AMIXEM",
+    "lienPromo": "https://fr.weareholy.com/Amixem/Youtube",
+    "urlChaineInfluenceur": "https://www.youtube.com/@Amixem",
+    "logoInfluenceur": "https://yt3.ggpht.com/mkxR4YNTUBJAjuq020488wM8yHSCZ4Kwn0etJyYyGTL86LnEiIzu5uhw8EwmPpRxavKYXyQ4Hmk=s88-c-k-c0x00ffffff-no-rj",
+    "nomInfluenceur": "Amixem",
+    "dateExpiration": "2025-12-31",
+    "Url": "https://fr.weareholy.com/Amixem/Youtube"
   }
 ]
