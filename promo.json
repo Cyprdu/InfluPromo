@@ -152,8 +152,26 @@
     "lienPromo": "https://www.pariscreatorweek.com/billetterie",
     "urlChaineInfluenceur": "https://www.youtube.com/@jokariz6803",
     "logoInfluenceur": "https://yt3.ggpht.com/A13PEPhmvvWillfRV5NB_4C-yLRn2Ll-0HaJV04rDH2J77H7dZuXa_DLxJfbYePD9EacsMex=s88-c-k-c0x00ffffff-no-rj",
-    "nomInfluenceur": "Amixem",
+    "nomInfluenceur": "Jokariz",
     "dateExpiration": "2025-12-08",
     "Url": "https://www.pariscreatorweek.com/billetterie"
+  },
+
+      {
+    "nomMarque": "ELSA",
+    "description": "Télécharge ELSA gratuitement et profite de 7 jours d'abonnement Pro offert",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://bit.ly/OVERFLOWXELSA",
+    "urlChaineInfluenceur": "https://www.youtube.com/@overfl-0-w",
+    "logoInfluenceur": "https://yt3.ggpht.com/zKJoDhDtZB6QW3WhvkFnBSfNOeEofal80rHgFMarCCvJD8mBblU71l1ks8qiXD1LIxPADW67aw=s88-c-k-c0x00ffffff-no-rj",
+    "nomInfluenceur": "Overfl0w",
+    "dateExpiration": "2026-12-31",
+    "Url": "https://www.pariscreatorweek.com/billetterie"
   }
+
+
+
+
+  
 ]
