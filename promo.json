@@ -1,0 +1,134 @@
+[
+  {
+    "nomMarque": "Nike",
+    "description": "15% de réduction sur toute la collection automne-hiver avec le code exclusif. Valable sur tous les articles de sport et lifestyle.",
+    "estCodePromo": true,
+    "codePromo": "NIKE15",
+    "lienPromo": "",
+    "urlChaineInfluenceur": "https://youtube.com/@sportech",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=12",
+    "nomInfluenceur": "SportTech",
+    "dateExpiration": "2024-12-31"
+  },
+  {
+    "nomMarque": "Nike",
+    "description": "Livraison gratuite sur votre première commande sans minimum d'achat. Profitez-en pour découvrir nos nouveautés!",
+    "estCodePromo": true,
+    "codePromo": "NIKEFREE",
+    "lienPromo": "",
+    "urlChaineInfluenceur": "https://youtube.com/@runningpro",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=33",
+    "nomInfluenceur": "Running Pro",
+    "dateExpiration": "2024-11-30"
+  },
+  {
+    "nomMarque": "Adidas",
+    "description": "Offre exclusive : 20% sur les sneakers avec ce lien spécial. Collection limitée disponible uniquement via ce partenariat.",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://adidas.com/promo/sneakers",
+    "urlChaineInfluenceur": "https://youtube.com/@sneakerhead",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=45",
+    "nomInfluenceur": "Sneaker Head",
+    "dateExpiration": "2024-12-15"
+  },
+  {
+    "nomMarque": "Amazon",
+    "description": "30 jours d'essai gratuit Amazon Prime + 5€ offerts sur votre première commande. Accédez à des milliers de films et séries.",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://amazon.fr/prime/offer",
+    "urlChaineInfluenceur": "https://youtube.com/@techreview",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=8",
+    "nomInfluenceur": "Tech Review",
+    "dateExpiration": "2024-12-31"
+  },
+  {
+    "nomMarque": "Sephora",
+    "description": "Code VIP : 25% de réduction sur toute votre commande beauté. Valable sur plus de 1000 produits de marques premium.",
+    "estCodePromo": true,
+    "codePromo": "BEAUTY25",
+    "lienPromo": "",
+    "urlChaineInfluenceur": "https://youtube.com/@beautyguru",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=23",
+    "nomInfluenceur": "Beauty Guru",
+    "dateExpiration": "2025-01-15"
+  },
+  {
+    "nomMarque": "McDonald's",
+    "description": "Menu Best Of offert dès 15€ d'achat via l'application. Commandez en ligne et récupérez en restaurant.",
+    "estCodePromo": true,
+    "codePromo": "BESTOF2024",
+    "lienPromo": "",
+    "urlChaineInfluenceur": "https://youtube.com/@foodlover",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=56",
+    "nomInfluenceur": "Food Lover",
+    "dateExpiration": "2024-11-20"
+  },
+  {
+    "nomMarque": "Uber Eats",
+    "description": "Livraison gratuite sur vos 5 premières commandes. Code valable pour les nouveaux utilisateurs uniquement.",
+    "estCodePromo": true,
+    "codePromo": "EATS5FREE",
+    "lienPromo": "",
+    "urlChaineInfluenceur": "https://youtube.com/@cityfood",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=67",
+    "nomInfluenceur": "City Food",
+    "dateExpiration": "2024-12-31"
+  },
+  {
+    "nomMarque": "Gymshark",
+    "description": "Collection exclusive : -30% sur tous les vêtements de sport avec ce lien partenaire. Stocks limités!",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://gymshark.com/promo/exclusive",
+    "urlChaineInfluenceur": "https://youtube.com/@fitnesslife",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=34",
+    "nomInfluenceur": "Fitness Life",
+    "dateExpiration": "2024-11-25"
+  },
+  {
+    "nomMarque": "NordVPN",
+    "description": "Offre spéciale : 70% de réduction sur l'abonnement 2 ans + 3 mois gratuits. Sécurisez votre navigation dès maintenant.",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://nordvpn.com/offer/special",
+    "urlChaineInfluenceur": "https://youtube.com/@cybersec",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=78",
+    "nomInfluenceur": "Cyber Sec",
+    "dateExpiration": "2025-02-01"
+  },
+  {
+    "nomMarque": "Shein",
+    "description": "Code exclusif pour 20% de réduction sur votre première commande mode. Plus de 100 000 articles disponibles.",
+    "estCodePromo": true,
+    "codePromo": "SHEIN20",
+    "lienPromo": "",
+    "urlChaineInfluenceur": "https://youtube.com/@fashionista",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=90",
+    "nomInfluenceur": "Fashionista",
+    "dateExpiration": "2024-12-10"
+  },
+  {
+    "nomMarque": "HelloFresh",
+    "description": "90€ de réduction sur vos 4 premières box repas + livraison offerte. Découvrez la cuisine facile et savoureuse.",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://hellofresh.fr/promo/90off",
+    "urlChaineInfluenceur": "https://youtube.com/@homechef",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=15",
+    "nomInfluenceur": "Home Chef",
+    "dateExpiration": "2024-12-31"
+  },
+  {
+    "nomMarque": "Spotify",
+    "description": "3 mois de Spotify Premium gratuits pour les nouveaux abonnés. Musique illimitée sans publicité.",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://spotify.com/premium/offer",
+    "urlChaineInfluenceur": "https://youtube.com/@musiclover",
+    "logoInfluenceur": "https://i.pravatar.cc/150?img=42",
+    "nomInfluenceur": "Music Lover",
+    "dateExpiration": "2024-11-15"
+  }
+]
