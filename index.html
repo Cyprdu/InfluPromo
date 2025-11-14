@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="InfluPromo - Tous les codes promo et offres des influenceurs au même endroit">
+    <title>InfluPromo - Codes Promo Influenceurs</title>
+    
+    <style>
+        /* ===== VARIABLES CSS ===== */
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #ec4899;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border: #475569;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ===== FILTERS SECTION ===== */
+        .filters-section {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filters-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+            max-width: 500px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--background);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select {
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--background);
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select option {
+            background: var(--surface);
+            color: var(--text-primary);
+            padding: 0.5rem;
+        }
+
+        .reset-btn {
+            padding: 0.875rem 2rem;
+            background: var(--surface-light);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-end;
+        }
+
+        .reset-btn:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* ===== PROMO GRID ===== */
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ===== PROMO CARD ===== */
+        .promo-card {
+            background: var(--surface);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow);
+            border-color: var(--primary-color);
+        }
+
+        .promo-card.expired {
+            opacity: 0.6;
+            filter: grayscale(50%);
+        }
+
+        .promo-header {
+            background: var(--gradient);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .brand-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 8px;
+        }
+
+        .brand-logo-fallback {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .brand-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .promo-type {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .promo-type.code {
+            background: var(--success);
+            color: white;
+        }
+
+        .promo-type.link {
+            background: var(--warning);
+            color: white;
+        }
+
+        .promo-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .promo-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .promo-code-section,
+        .promo-link-section {
+            background: var(--background);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 2px dashed var(--border);
+        }
+
+        .code-label,
+        .link-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .code-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+
+        .copy-btn {
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        .promo-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .promo-link:hover {
+            background: var(--primary-dark);
+            transform: translateX(4px);
+        }
+
+        .promo-footer {
+            padding: 1rem 1.5rem;
+            background: var(--background);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .influencer-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 1;
+        }
+
+        .influencer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+            background: var(--surface-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .influencer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .influencer-avatar-fallback {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .influencer-details {
+            flex: 1;
+        }
+
+        .influencer-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .influencer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .influencer-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .expiry-date {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .expiry-date.expired {
+            color: var(--error);
+            font-weight: 600;
+        }
+
+        .expiry-date.soon {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--surface);
+            border-radius: 16px;
+            border: 2px dashed var(--border);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* ===== LOADING STATE ===== */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== ERROR STATE ===== */
+        .error-state {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid var(--error);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .error-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--error);
+            margin-bottom: 0.5rem;
+        }
+
+        .error-text {
+            color: var(--text-secondary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--surface);
+            border-top: 2px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+            z-index: 10000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .promo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                max-width: 100%;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* ===== ACCESSIBILITY ===== */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">🎁</div>
+                <h1>InfluPromo</h1>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="totalPromos">0</span>
+                    <span class="stat-label">Promos Actives</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="totalBrands">0</span>
+                    <span class="stat-label">Marques</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="totalInfluencers">0</span>
+                    <span class="stat-label">Influenceurs</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        <!-- FILTERS SECTION -->
+        <section class="filters-section" aria-label="Filtres de recherche">
+            <div class="filters-header">
+                <h2 class="filters-title">
+                    🔍 Rechercher & Filtrer
+                </h2>
+                <div class="search-container">
+                    <span class="search-icon">🔎</span>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Rechercher une marque, un influenceur..."
+                        aria-label="Rechercher"
+                    >
+                </div>
+            </div>
+
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="brandFilter">Marque</label>
+                    <select id="brandFilter" aria-label="Filtrer par marque">
+                        <option value="">Toutes les marques</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="influencerFilter">Influenceur</label>
+                    <select id="influencerFilter" aria-label="Filtrer par influenceur">
+                        <option value="">Tous les influenceurs</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="typeFilter">Type d'offre</label>
+                    <select id="typeFilter" aria-label="Filtrer par type">
+                        <option value="">Tous les types</option>
+                        <option value="code">Code Promo</option>
+                        <option value="link">Lien Promo</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <button class="reset-btn" id="resetFilters" aria-label="Réinitialiser les filtres">
+                        🔄 Réinitialiser
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROMO GRID -->
+        <section id="promoContainer" aria-label="Liste des promotions">
+            <div class="loading">
+                <div class="spinner" role="status"></div>
+                <p>Chargement des promotions...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 InfluPromo - Tous les codes promo des influenceurs réunis en un seul endroit</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ===== CONFIGURATION =====
+        const CONFIG = {
+            LOGO_API_KEY: 'pk_HD3U-r4QQSWDCubQAADs3w',
+            LOGO_API_BASE: 'https://img.logo.dev',
+            JSON_FILE: 'promo.json',
+            TOAST_DURATION: 3000
+        };
+
+        // ===== ÉTAT GLOBAL =====
+        let allPromos = [];
+        let filteredPromos = [];
+
+        // ===== UTILITAIRES =====
+        
+        /**
+         * Vérifie si une date est expirée
+         */
+        function isExpired(dateString) {
+            if (!dateString) return false;
+            const expiryDate = new Date(dateString);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return expiryDate < today;
+        }
+
+        /**
+         * Vérifie si une date expire bientôt (dans les 7 jours)
+         */
+        function isExpiringSoon(dateString) {
+            if (!dateString) return false;
+            const expiryDate = new Date(dateString);
+            const today = new Date();
+            const sevenDaysFromNow = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
+            return expiryDate >= today && expiryDate <= sevenDaysFromNow;
+        }
+
+        /**
+         * Formate une date en format lisible
+         */
+        function formatDate(dateString) {
+            if (!dateString) return 'Non défini';
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+
+        /**
+         * Obtient l'URL du logo depuis Logo.dev API
+         */
+        function getBrandLogoUrl(brandName) {
+            if (!brandName) return null;
+            
+            // Nettoyage du nom de la marque pour l'URL
+            const cleanBrandName = brandName.toLowerCase()
+                .replace(/\s+/g, '')
+                .replace(/[^a-z0-9]/g, '');
+            
+            // Construction de l'URL selon la documentation de Logo.dev
+            // Format: https://img.logo.dev/{domain}?token={api_key}&size={size}
+            // On essaie avec .com comme domaine par défaut
+            return `${CONFIG.LOGO_API_BASE}/${cleanBrandName}.com?token=${CONFIG.LOGO_API_KEY}&size=200&format=png`;
+        }
+
+        /**
+         * Obtient les initiales d'un nom
+         */
+        function getInitials(name) {
+            if (!name) return '?';
+            return name
+                .split(' ')
+                .map(word => word[0])
+                .join('')
+                .toUpperCase()
+                .slice(0, 2);
+        }
+
+        /**
+         * Échappe les caractères HTML pour prévenir les injections XSS
+         */
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        /**
+         * Affiche un toast notification
+         */
+        function showToast(message, duration = CONFIG.TOAST_DURATION) {
+            // Supprime les toasts existants
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<span>✓</span> ${escapeHtml(message)}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        /**
+         * Copie du texte dans le presse-papiers
+         */
+        async function copyToClipboard(text, button) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalText = button.textContent;
+                button.textContent = '✓ Copié!';
+                button.classList.add('copied');
+                showToast(`Code "${text}" copié dans le presse-papiers!`);
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                console.error('Erreur lors de la copie:', err);
+                showToast('Erreur lors de la copie');
+            }
+        }
+
+        // ===== GÉNÉRATION DU HTML =====
+
+        /**
+         * Génère le HTML pour une carte promo
+         */
+        function generatePromoCard(promo) {
+            const expired = isExpired(promo.dateExpiration);
+            const expiringSoon = isExpiringSoon(promo.dateExpiration);
+            const brandLogoUrl = getBrandLogoUrl(promo.nomMarque);
+            
+            let expiryClass = '';
+            let expiryIcon = '📅';
+            if (expired) {
+                expiryClass = 'expired';
+                expiryIcon = '❌';
+            } else if (expiringSoon) {
+                expiryClass = 'soon';
+                expiryIcon = '⚠️';
+            }
+
+            return `
+                <article class="promo-card ${expired ? 'expired' : ''}" data-promo-id="${promo.id || ''}">
+                    <!-- Header -->
+                    <div class="promo-header">
+                        <div class="brand-info">
+                            <div class="brand-logo">
+                                <img 
+                                    src="${brandLogoUrl}" 
+                                    alt="Logo ${escapeHtml(promo.nomMarque)}"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                    loading="lazy"
+                                >
+                                <span class="brand-logo-fallback" style="display:none;">
+                                    ${getInitials(promo.nomMarque)}
+                                </span>
+                            </div>
+                            <h3 class="brand-name">${escapeHtml(promo.nomMarque)}</h3>
+                        </div>
+                        <span class="promo-type ${promo.estCodePromo ? 'code' : 'link'}">
+                            ${promo.estCodePromo ? '🎫 Code' : '🔗 Lien'}
+                        </span>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="promo-body">
+                        <p class="promo-description">${escapeHtml(promo.description)}</p>
+                        
+                        ${promo.estCodePromo ? `
+                            <div class="promo-code-section">
+                                <div class="code-label">Code Promo</div>
+                                <div class="code-display">
+                                    <span class="code-text">${escapeHtml(promo.codePromo)}</span>
+                                    <button 
+                                        class="copy-btn" 
+                                        onclick="copyToClipboard('${escapeHtml(promo.codePromo)}', this)"
+                                        aria-label="Copier le code ${escapeHtml(promo.codePromo)}"
+                                    >
+                                        📋 Copier
+                                    </button>
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="promo-link-section">
+                                <div class="link-label">Lien Promotionnel</div>
+                                <a 
+                                    href="${escapeHtml(promo.lienPromo)}" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    class="promo-link"
+                                    aria-label="Accéder à l'offre de ${escapeHtml(promo.nomMarque)}"
+                                >
+                                    Accéder à l'offre →
+                                </a>
+                            </div>
+                        `}
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="promo-footer">
+                        <div class="influencer-info">
+                            <div class="influencer-avatar">
+                                <img 
+                                    src="${escapeHtml(promo.logoInfluenceur)}" 
+                                    alt="${escapeHtml(promo.nomInfluenceur)}"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                    loading="lazy"
+                                >
+                                <span class="influencer-avatar-fallback" style="display:none;">
+                                    ${getInitials(promo.nomInfluenceur)}
+                                </span>
+                            </div>
+                            <div class="influencer-details">
+                                <div class="influencer-name">${escapeHtml(promo.nomInfluenceur)}</div>
+                                <a 
+                                    href="${escapeHtml(promo.urlChaineInfluenceur)}" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    class="influencer-link"
+                                    aria-label="Visiter la chaîne de ${escapeHtml(promo.nomInfluenceur)}"
+                                >
+                                    Voir la chaîne ↗
+                                </a>
+                            </div>
+                        </div>
+                        <div class="expiry-date ${expiryClass}">
+                            <span>${expiryIcon}</span>
+                            <span>${formatDate(promo.dateExpiration)}</span>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        /**
+         * Affiche les cartes promo
+         */
+        function displayPromos(promos) {
+            const container = document.getElementById('promoContainer');
+            
+            if (promos.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3 class="empty-title">Aucune promotion trouvée</h3>
+                        <p class="empty-text">Essayez de modifier vos filtres de recherche</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const grid = document.createElement('div');
+            grid.className = 'promo-grid';
+            grid.innerHTML = promos.map(promo => generatePromoCard(promo)).join('');
+            
+            container.innerHTML = '';
+            container.appendChild(grid);
+        }
+
+        /**
+         * Affiche un état d'erreur
+         */
+        function displayError(message) {
+            const container = document.getElementById('promoContainer');
+            container.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">⚠️</div>
+                    <h3 class="error-title">Erreur de chargement</h3>
+                    <p class="error-text">${escapeHtml(message)}</p>
+                </div>
+            `;
+        }
+
+        // ===== FILTRAGE ET TRI =====
+
+        /**
+         * Applique les filtres sur les promos
+         */
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const brandFilter = document.getElementById('brandFilter').value;
+            const influencerFilter = document.getElementById('influencerFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+
+            filteredPromos = allPromos.filter(promo => {
+                // Filtre de recherche
+                if (searchTerm) {
+                    const searchableText = `
+                        ${promo.nomMarque} 
+                        ${promo.nomInfluenceur} 
+                        ${promo.description}
+                        ${promo.codePromo || ''}
+                    `.toLowerCase();
+                    
+                    if (!searchableText.includes(searchTerm)) {
+                        return false;
+                    }
+                }
+
+                // Filtre par marque
+                if (brandFilter && promo.nomMarque !== brandFilter) {
+                    return false;
+                }
+
+                // Filtre par influenceur
+                if (influencerFilter && promo.nomInfluenceur !== influencerFilter) {
+                    return false;
+                }
+
+                // Filtre par type
+                if (typeFilter) {
+                    if (typeFilter === 'code' && !promo.estCodePromo) return false;
+                    if (typeFilter === 'link' && promo.estCodePromo) return false;
+                }
+
+                return true;
+            });
+
+            displayPromos(filteredPromos);
+            updateStats();
+        }
+
+        /**
+         * Réinitialise tous les filtres
+         */
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('brandFilter').value = '';
+            document.getElementById('influencerFilter').value = '';
+            document.getElementById('typeFilter').value = '';
+            
+            filteredPromos = [...allPromos];
+            displayPromos(filteredPromos);
+            updateStats();
+        }
+
+        // ===== INITIALISATION DES FILTRES =====
+
+        /**
+         * Peuple les dropdowns de filtres
+         */
+        function populateFilters() {
+            // Récupération des marques uniques
+            const brands = [...new Set(allPromos.map(p => p.nomMarque))].sort();
+            const brandSelect = document.getElementById('brandFilter');
+            brandSelect.innerHTML = '<option value="">Toutes les marques</option>' +
+                brands.map(brand => `<option value="${escapeHtml(brand)}">${escapeHtml(brand)}</option>`).join('');
+
+            // Récupération des influenceurs uniques
+            const influencers = [...new Set(allPromos.map(p => p.nomInfluenceur))].sort();
+            const influencerSelect = document.getElementById('influencerFilter');
+            influencerSelect.innerHTML = '<option value="">Tous les influenceurs</option>' +
+                influencers.map(inf => `<option value="${escapeHtml(inf)}">${escapeHtml(inf)}</option>`).join('');
+        }
+
+        // ===== STATISTIQUES =====
+
+        /**
+         * Met à jour les statistiques du header
+         */
+        function updateStats() {
+            const activePromos = filteredPromos.filter(p => !isExpired(p.dateExpiration));
+            const brands = new Set(filteredPromos.map(p => p.nomMarque));
+            const influencers = new Set(filteredPromos.map(p => p.nomInfluenceur));
+
+            document.getElementById('totalPromos').textContent = activePromos.length;
+            document.getElementById('totalBrands').textContent = brands.size;
+            document.getElementById('totalInfluencers').textContent = influencers.size;
+        }
+
+        // ===== CHARGEMENT DES DONNÉES =====
+
+        /**
+         * Valide la structure d'une promo
+         */
+        function validatePromo(promo, index) {
+            const required = ['nomMarque', 'description', 'estCodePromo', 'urlChaineInfluenceur', 'nomInfluenceur'];
+            const missing = required.filter(field => !promo[field]);
+            
+            if (missing.length > 0) {
+                console.warn(`Promo ${index}: champs manquants:`, missing);
+                return false;
+            }
+
+            if (promo.estCodePromo && !promo.codePromo) {
+                console.warn(`Promo ${index}: code promo manquant`);
+                return false;
+            }
+
+            if (!promo.estCodePromo && !promo.lienPromo) {
+                console.warn(`Promo ${index}: lien promo manquant`);
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
+         * Charge les données depuis le fichier JSON
+         */
+        async function loadPromos() {
+            try {
+                const response = await fetch(CONFIG.JSON_FILE);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Validation et nettoyage des données
+                if (!Array.isArray(data)) {
+                    throw new Error('Le fichier JSON doit contenir un tableau');
+                }
+
+                // Filtrage des promos valides et ajout d'IDs
+                allPromos = data
+                    .map((promo, index) => ({
+                        ...promo,
+                        id: index,
+                        // Valeurs par défaut
+                        logoInfluenceur: promo.logoInfluenceur || '',
+                        dateExpiration: promo.dateExpiration || null
+                    }))
+                    .filter((promo, index) => validatePromo(promo, index));
+
+                // Tri par date d'expiration (les plus récentes en premier)
+                allPromos.sort((a, b) => {
+                    if (!a.dateExpiration) return 1;
+                    if (!b.dateExpiration) return -1;
+                    return new Date(b.dateExpiration) - new Date(a.dateExpiration);
+                });
+
+                filteredPromos = [...allPromos];
+
+                // Affichage
+                populateFilters();
+                displayPromos(filteredPromos);
+                updateStats();
+
+            } catch (error) {
+                console.error('Erreur lors du chargement des promos:', error);
+                displayError(`Impossible de charger les promotions: ${error.message}`);
+            }
+        }
+
+        // ===== EVENT LISTENERS =====
+
+        /**
+         * Initialise tous les event listeners
+         */
+        function initEventListeners() {
+            // Recherche avec debounce
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(applyFilters, 300);
+            });
+
+            // Filtres
+            document.getElementById('brandFilter').addEventListener('change', applyFilters);
+            document.getElementById('influencerFilter').addEventListener('change', applyFilters);
+            document.getElementById('typeFilter').addEventListener('change', applyFilters);
+
+            // Reset
+            document.getElementById('resetFilters').addEventListener('click', resetFilters);
+
+            // Gestion du clavier pour l'accessibilité
+            document.addEventListener('keydown', (e) => {
+                // Escape pour réinitialiser
+                if (e.key === 'Escape') {
+                    resetFilters();
+                }
+            });
+        }
+
+        // ===== INITIALISATION =====
+
+        /**
+         * Point d'entrée de l'application
+         */
+        async function init() {
+            console.log('🚀 Initialisation de InfluPromo...');
+            
+            initEventListeners();
+            await loadPromos();
+            
+            console.log('✅ InfluPromo initialisé avec succès!');
+            console.log(`📊 ${allPromos.length} promotions chargées`);
+        }
+
+        // Démarrage de l'application au chargement du DOM
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Gestion du mode hors-ligne
+        window.addEventListener('online', () => {
+            showToast('Connexion rétablie');
+        });
+
+        window.addEventListener('offline', () => {
+            showToast('Mode hors-ligne activé');
+        });
+    </script>
+</body>
+</html>
