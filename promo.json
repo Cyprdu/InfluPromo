@@ -181,7 +181,18 @@
     "dateExpiration": "2026-12-31",
     "Url": "https://elsaspeak.com/"
   },
-
+  {
+    "nomMarque": "NordVPN",
+    "description": "Offre exclusive Black Friday : énorme remise + 4 mois offerts",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "https://nordvpn.com/remontada",
+    "urlChaineInfluenceur": "https://www.youtube.com/@remontada_yt",
+    "logoInfluenceur": "https://yt3.ggpht.com/0Wd2OL7VkGMZMhkFVZC82lcb5WPTlX_A8jvCNX1Ujs7hdKBB4oFVa3lfI_9pqAmWHVN8Tszdhrw=s88-c-k-c0x00ffffff-no-rj",
+    "nomInfluenceur": "Remontada",
+    "dateExpiration": "2025-12-31",
+    "Url": "https://nordvpn.com/remontada"
+  }
 
 
   
