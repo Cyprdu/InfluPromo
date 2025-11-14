@@ -1456,665 +1456,607 @@
     </footer>
 
     <!-- JAVASCRIPT -->
-    <script>
-        // ===== CONFIGURATION =====
-        const CONFIG = {
-            LOGO_API_KEY: 'pk_HD3U-r4QQSWDCubQAADs3w',
-            LOGO_API_BASE: 'https://img.logo.dev',
-            JSON_FILE: 'promo.json',
-            TOAST_DURATION: 4000
+<script>
+    // ===== CONFIGURATION =====
+    const CONFIG = {
+        LOGO_API_KEY: 'pk_HD3U-r4QQSWDCubQAADs3w',
+        LOGO_API_BASE: 'https://img.logo.dev',
+        JSON_FILE: 'promo.json',
+        TOAST_DURATION: 4000
+    };
+
+    // ===== ÉTAT GLOBAL =====
+    let allPromos = [];
+    let filteredPromos = [];
+
+    // ===== UTILITAIRES =====
+    
+    function isExpired(dateString) {
+        if (!dateString) return false;
+        const expiryDate = new Date(dateString);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return expiryDate < today;
+    }
+
+    function isExpiringSoon(dateString) {
+        if (!dateString) return false;
+        const expiryDate = new Date(dateString);
+        const today = new Date();
+        const sevenDaysFromNow = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
+        return expiryDate >= today && expiryDate <= sevenDaysFromNow;
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return 'Non défini';
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('fr-FR', options);
+    }
+
+    function getDomainFromUrl(url) {
+        try {
+            const urlObj = new URL(url);
+            return urlObj.hostname.replace('www.', '');
+        } catch (e) {
+            return url;
+        }
+    }
+
+    function getLogoUrl(brandName) {
+        const domain = getDomainFromUrl(brandName);
+        return `${CONFIG.LOGO_API_BASE}/${domain}?token=${CONFIG.LOGO_API_KEY}&size=200`;
+    }
+
+    function escapeHtml(text) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
+
+    function getInitials(name) {
+        return name
+            .split(' ')
+            .map(word => word[0])
+            .join('')
+            .toUpperCase()
+            .substring(0, 2);
+    }
+
+    function showToast(message, type = 'info') {
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) {
+            existingToast.remove();
+        }
+
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-exclamation-circle',
+            warning: 'fa-exclamation-triangle',
+            info: 'fa-info-circle'
         };
 
-        // ===== ÉTAT GLOBAL =====
-        let allPromos = [];
-        let filteredPromos = [];
+        toast.innerHTML = `
+            <i class="fas ${icons[type] || icons.info}"></i>
+            <span>${escapeHtml(message)}</span>
+            <button class="toast-close" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
 
-        // ===== UTILITAIRES =====
-        
-        /**
-         * Vérifie si une date est expirée
-         */
-        function isExpired(dateString) {
-            if (!dateString) return false;
-            const expiryDate = new Date(dateString);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            return expiryDate < today;
-        }
+        document.body.appendChild(toast);
 
-        /**
-         * Vérifie si une date expire bientôt (dans les 7 jours)
-         */
-        function isExpiringSoon(dateString) {
-            if (!dateString) return false;
-            const expiryDate = new Date(dateString);
-            const today = new Date();
-            const sevenDaysFromNow = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
-            return expiryDate >= today && expiryDate <= sevenDaysFromNow;
-        }
+        setTimeout(() => toast.classList.add('show'), 10);
 
-        /**
-         * Formate une date en format lisible
-         */
-        function formatDate(dateString) {
-            if (!dateString) return 'Non défini';
-            const date = new Date(dateString);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('fr-FR', options);
-        }
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, CONFIG.TOAST_DURATION);
+    }
 
-        /**
-         * Extrait le domaine d'une URL
-         */
-        function getDomainFromUrl(url) {
-            try {
-                const urlObj = new URL(url);
-                return urlObj.hostname.replace('www.', '');
-            } catch (e) {
-                return url;
-            }
-        }
-
-        /**
-         * Génère une URL de logo via Logo.dev
-         */
-        function getLogoUrl(brandName) {
-            const domain = getDomainFromUrl(brandName);
-            return ` $ {CONFIG.LOGO_API_BASE}/ $ {domain}?token= $ {CONFIG.LOGO_API_KEY}&size=200`;
-        }
-
-        /**
-         * Échappe les caractères HTML pour éviter XSS
-         */
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return String(text).replace(/[&<>"']/g, m => map[m]);
-        }
-
-        /**
-         * Obtient les initiales d'un nom
-         */
-        function getInitials(name) {
-            return name
-                .split(' ')
-                .map(word => word[0])
-                .join('')
-                .toUpperCase()
-                .substring(0, 2);
-        }
-
-        /**
-         * Affiche une notification toast
-         */
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast  $ {type}`;
-            
-            const iconMap = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            
-            toast.innerHTML = `
-                <i class="fas  $ {iconMap[type] || iconMap.info} toast-icon"></i>
-                <span class="toast-message"> $ {escapeHtml(message)}</span>
-            `;
-            
-            container.appendChild(toast);
+    async function copyToClipboard(text, button) {
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copié !';
+            button.classList.add('copied');
+            showToast(`Code "${text}" copié avec succès !`, 'success');
             
             setTimeout(() => {
-                toast.classList.add('toast-out');
-                setTimeout(() => toast.remove(), 300);
-            }, CONFIG.TOAST_DURATION);
+                button.innerHTML = originalHTML;
+                button.classList.remove('copied');
+            }, 2000);
+        } catch (err) {
+            console.error('Erreur lors de la copie:', err);
+            showToast('Erreur lors de la copie', 'error');
+        }
+    }
+
+    function revealCode(promoId) {
+        const codeElement = document.querySelector(`[data-promo-id="${promoId}"] .code-text`);
+        const overlay = document.querySelector(`[data-promo-id="${promoId}"] .reveal-overlay`);
+        
+        if (codeElement && overlay) {
+            codeElement.classList.remove('blurred');
+            overlay.style.display = 'none';
+            
+            codeElement.style.animation = 'none';
+            setTimeout(() => {
+                codeElement.style.animation = 'fadeIn 0.5s ease-out';
+            }, 10);
+        }
+    }
+
+    // ===== GÉNÉRATION DU HTML =====
+
+    function generatePromoCard(promo) {
+        const logoUrl = getLogoUrl(promo.nomMarque);
+        const expired = isExpired(promo.dateExpiration);
+        const expiringSoon = isExpiringSoon(promo.dateExpiration);
+        
+        let expiryClass = 'valid';
+        let expiryIcon = '<i class="fas fa-check-circle"></i>';
+        
+        if (expired) {
+            expiryClass = 'expired';
+            expiryIcon = '<i class="fas fa-times-circle"></i>';
+        } else if (expiringSoon) {
+            expiryClass = 'soon';
+            expiryIcon = '<i class="fas fa-exclamation-triangle"></i>';
         }
 
-        /**
-         * Copie du texte dans le presse-papiers
-         */
-        async function copyToClipboard(text, button) {
-            try {
-                await navigator.clipboard.writeText(text);
-                const originalHTML = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
-                button.classList.add('copied');
-                showToast(`Code " $ {text}" copié avec succès !`, 'success');
+        const influencerInitials = getInitials(promo.nomInfluenceur);
+        
+        // Déterminer l'URL de redirection
+        const redirectUrl = promo.Url || promo.lienPromo || '#';
+
+        return `
+            <article class="promo-card ${expired ? 'expired' : ''}" data-promo-id="${promo.id}">
+                ${expired ? '<div class="expired-overlay"><span>Expiré</span></div>' : ''}
                 
-                setTimeout(() => {
-                    button.innerHTML = originalHTML;
-                    button.classList.remove('copied');
-                }, 2000);
-            } catch (err) {
-                console.error('Erreur lors de la copie:', err);
-                showToast('Erreur lors de la copie', 'error');
-            }
-        }
-
-        /**
-         * Révèle le code promo
-         */
-        function revealCode(promoId) {
-            const card = document.querySelector(`[data-promo-id=" $ {promoId}"]`);
-            if (!card) return;
-            
-            const codeElement = card.querySelector('.code-text');
-            const overlay = card.querySelector('.reveal-overlay');
-            
-            if (codeElement && overlay) {
-                codeElement.classList.remove('blurred');
-                overlay.style.display = 'none';
-                
-                // Animation de révélation
-                codeElement.style.animation = 'none';
-                setTimeout(() => {
-                    codeElement.style.animation = 'fadeIn 0.5s ease-out';
-                }, 10);
-            }
-        }
-
-        // ===== GÉNÉRATION DU HTML =====
-
-        /**
-         * Génère le HTML pour une carte promo
-         */
-        function generatePromoCard(promo) {
-            const logoUrl = getLogoUrl(promo.nomMarque);
-            const influencerInitials = getInitials(promo.nomInfluenceur);
-            
-            // Détermination du statut d'expiration
-            let expiryClass = 'valid';
-            let expiryIcon = '<i class="fas fa-check-circle"></i>';
-            
-            if (isExpired(promo.dateExpiration)) {
-                expiryClass = 'expired';
-                expiryIcon = '<i class="fas fa-times-circle"></i>';
-            } else if (isExpiringSoon(promo.dateExpiration)) {
-                expiryClass = 'expiring';
-                expiryIcon = '<i class="fas fa-exclamation-circle"></i>';
-            }
-
-            return `
-                <article class="promo-card" data-promo-id=" $ {promo.id}">
-                    <!-- Header -->
-                    <div class="card-header">
-                        <div class="brand-wrapper">
-                            <div class="brand-logo-container">
-                                <img 
-                                    src=" $ {logoUrl}" 
-                                    alt="Logo  $ {escapeHtml(promo.nomMarque)}"
-                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                                >
-                                <div class="brand-logo-fallback" style="display: none;">
-                                     $ {getInitials(promo.nomMarque)}
-                                </div>
-                            </div>
-                            <div class="brand-info">
-                                <h3 class="brand-name"> $ {escapeHtml(promo.nomMarque)}</h3>
-                                <span class="brand-category">
-                                    <i class="fas fa-tag"></i>
-                                     $ {promo.estCodePromo ? 'Code Promo' : 'Lien Promo'}
-                                </span>
-                            </div>
+                <!-- Header -->
+                <div class="card-header">
+                    <div class="brand-logo-wrapper">
+                        <img 
+                            src="${logoUrl}" 
+                            alt="Logo ${escapeHtml(promo.nomMarque)}"
+                            class="brand-logo"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <div class="brand-logo-fallback" style="display: none;">
+                            ${escapeHtml(promo.nomMarque.substring(0, 2).toUpperCase())}
                         </div>
                     </div>
+                    <div class="brand-info">
+                        <h3 class="brand-name">${escapeHtml(promo.nomMarque)}</h3>
+                        <span class="promo-type">
+                            <i class="fas ${promo.estCodePromo ? 'fa-ticket-alt' : 'fa-link'}"></i>
+                            ${promo.estCodePromo ? 'Code Promo' : 'Lien Promotionnel'}
+                        </span>
+                    </div>
+                </div>
 
-                    <!-- Body -->
-                    <div class="card-body">
-                        <p class="promo-description"> $ {escapeHtml(promo.description)}</p>
-                        
-                         $ {promo.estCodePromo ? `
-                            <div class="code-section">
-                                <div class="code-label">
-                                    <i class="fas fa-ticket-alt"></i>
-                                    Code Promo
-                                </div>
-                                <div class="code-reveal-wrapper">
-                                    <div class="code-display">
-                                        <div class="code-text blurred" data-code=" $ {escapeHtml(promo.codePromo)}">
-                                             $ {escapeHtml(promo.codePromo)}
-                                        </div>
-                                        <button 
-                                            class="copy-button" 
-                                            onclick="copyToClipboard(' $ {escapeHtml(promo.codePromo)}', this)"
-                                            aria-label="Copier le code  $ {escapeHtml(promo.codePromo)}"
-                                        >
-                                            <i class="fas fa-copy"></i>
-                                            Copier
-                                        </button>
-                                    </div>
-                                    <div class="reveal-overlay" onclick="revealCode(' $ {promo.id}')">
-                                        <button class="reveal-button">
-                                            <i class="fas fa-eye"></i>
-                                            Révéler le code
-                                        </button>
-                                    </div>
-                                </div>
-                                 $ {promo.Url ? `
-                                    <a 
-                                        href=" $ {escapeHtml(promo.Url)}" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
-                                        class="promo-link-button"
-                                        style="margin-top: 1rem;"
-                                        aria-label="Accéder au site de  $ {escapeHtml(promo.nomMarque)}"
-                                    >
-                                        <i class="fas fa-external-link-alt"></i>
-                                        Aller sur le site
-                                    </a>
-                                ` : ''}
+                <!-- Influencer -->
+                <div class="influencer-section">
+                    ${promo.logoInfluenceur ? `
+                        <img 
+                            src="${escapeHtml(promo.logoInfluenceur)}" 
+                            alt="${escapeHtml(promo.nomInfluenceur)}"
+                            class="influencer-avatar"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <div class="influencer-avatar-fallback" style="display: none;">
+                            ${influencerInitials}
+                        </div>
+                    ` : `
+                        <div class="influencer-avatar-fallback">
+                            ${influencerInitials}
+                        </div>
+                    `}
+                    <div class="influencer-details">
+                        <div class="influencer-name">${escapeHtml(promo.nomInfluenceur)}</div>
+                        <a 
+                            href="${escapeHtml(promo.urlChaineInfluenceur)}" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            class="influencer-link"
+                        >
+                            <i class="fab fa-youtube"></i>
+                            Voir la chaîne
+                        </a>
+                    </div>
+                    <div class="expiry-badge ${expiryClass}">
+                        ${expiryIcon}
+                        ${formatDate(promo.dateExpiration)}
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body">
+                    <p class="promo-description">${escapeHtml(promo.description)}</p>
+                    
+                    ${promo.estCodePromo ? `
+                        <div class="code-section">
+                            <div class="code-label">
+                                <i class="fas fa-ticket-alt"></i>
+                                Code Promo
                             </div>
-                        ` : `
-                            <div class="link-section">
-                                <div class="link-label">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Lien Promotionnel
+                            <div class="code-reveal-wrapper">
+                                <div class="code-display">
+                                    <div class="code-text blurred" data-code="${escapeHtml(promo.codePromo)}">
+                                        ${escapeHtml(promo.codePromo)}
+                                    </div>
+                                    <button 
+                                        class="copy-button" 
+                                        onclick="copyToClipboard('${escapeHtml(promo.codePromo)}', this)"
+                                        aria-label="Copier le code ${escapeHtml(promo.codePromo)}"
+                                    >
+                                        <i class="fas fa-copy"></i>
+                                        Copier
+                                    </button>
                                 </div>
+                                <div class="reveal-overlay" onclick="revealCode('${promo.id}')">
+                                    <button class="reveal-button">
+                                        <i class="fas fa-eye"></i>
+                                        Révéler le code
+                                    </button>
+                                </div>
+                            </div>
+                            ${redirectUrl !== '#' ? `
                                 <a 
-                                    href=" $ {escapeHtml(promo.lienPromo || promo.Url)}" 
+                                    href="${escapeHtml(redirectUrl)}" 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
                                     class="promo-link-button"
-                                    aria-label="Accéder à l'offre de  $ {escapeHtml(promo.nomMarque)}"
+                                    style="margin-top: 1rem;"
+                                    aria-label="Aller sur le site de ${escapeHtml(promo.nomMarque)}"
                                 >
-                                    <i class="fas fa-arrow-right"></i>
-                                    Accéder à l'offre
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Aller sur le site
                                 </a>
-                            </div>
-                        `}
-                    </div>
-
-                    <!-- Footer -->
-                    <div class="card-footer">
-                        <a 
-                            href=" $ {escapeHtml(promo.urlChaineInfluenceur)}" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            class="influencer-info"
-                        >
-                            <div class="influencer-avatar">
-                                 $ {promo.logoInfluenceur ? `
-                                    <img 
-                                        src=" $ {escapeHtml(promo.logoInfluenceur)}" 
-                                        alt=" $ {escapeHtml(promo.nomInfluenceur)}"
-                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                                    >
-                                    <div class="influencer-avatar-fallback" style="display: none;">
-                                         $ {influencerInitials}
-                                    </div>
-                                ` : `
-                                    <div class="influencer-avatar-fallback">
-                                         $ {influencerInitials}
-                                    </div>
-                                `}
-                            </div>
-                            <div class="influencer-details">
-                                <span class="influencer-name"> $ {escapeHtml(promo.nomInfluenceur)}</span>
-                                <span class="influencer-handle">
-                                    <i class="fas fa-link"></i>
-                                    Voir la chaîne
-                                </span>
-                            </div>
-                        </a>
-                        
-                        <div class="expiry-badge  $ {expiryClass}">
-                             $ {expiryIcon}
-                            <span> $ {formatDate(promo.dateExpiration)}</span>
+                            ` : ''}
                         </div>
-                    </div>
-                </article>
-            `;
-        }
-
-        /**
-         * Affiche les cartes promo
-         */
-        function displayPromos(promos) {
-            const container = document.getElementById('promoContainer');
-            
-            if (promos.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">
-                            <i class="fas fa-search"></i>
+                    ` : `
+                        <div class="link-section">
+                            <div class="link-label">
+                                <i class="fas fa-external-link-alt"></i>
+                                Lien Promotionnel
+                            </div>
+                            <a 
+                                href="${escapeHtml(redirectUrl)}" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="promo-link-button"
+                                aria-label="Accéder à l'offre de ${escapeHtml(promo.nomMarque)}"
+                            >
+                                <i class="fas fa-arrow-right"></i>
+                                Accéder à l'offre
+                            </a>
                         </div>
-                        <h3 class="empty-title">Aucune promotion trouvée</h3>
-                        <p class="empty-text">Essayez de modifier vos filtres de recherche ou réinitialisez-les pour voir toutes les offres disponibles.</p>
-                        <button class="empty-button" onclick="resetFilters()">
-                            <i class="fas fa-redo-alt"></i>
-                            Réinitialiser les filtres
-                        </button>
-                    </div>
-                `;
-                return;
-            }
+                    `}
+                </div>
 
-            const grid = document.createElement('div');
-            grid.className = 'promo-grid';
-            grid.innerHTML = promos.map(promo => generatePromoCard(promo)).join('');
-            
-            container.innerHTML = '';
-            container.appendChild(grid);
+                <!-- Footer -->
+                <div class="card-footer">
+                    <button 
+                        class="share-button" 
+                        onclick="sharePromo('${escapeHtml(promo.nomMarque)}', '${escapeHtml(promo.description)}')"
+                        aria-label="Partager cette promotion"
+                    >
+                        <i class="fas fa-share-alt"></i>
+                        Partager
+                    </button>
+                </div>
+            </article>
+        `;
+    }
 
-            // Animation d'apparition des cartes
-            const cards = grid.querySelectorAll('.promo-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 50);
-            });
+    function sharePromo(brand, description) {
+        if (navigator.share) {
+            navigator.share({
+                title: `Promo ${brand}`,
+                text: description,
+                url: window.location.href
+            }).catch(err => console.log('Erreur de partage:', err));
+        } else {
+            showToast('Partage non supporté sur ce navigateur', 'warning');
         }
+    }
 
-        /**
-         * Affiche un état d'erreur
-         */
-        function displayError(message) {
-            const container = document.getElementById('promoContainer');
+    function displayPromos(promos) {
+        const container = document.getElementById('promoContainer');
+        
+        if (promos.length === 0) {
             container.innerHTML = `
-                <div class="error-state">
-                    <div class="error-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-search"></i>
                     </div>
-                    <h3 class="error-title">Erreur de chargement</h3>
-                    <p class="error-text">${escapeHtml(message)}</p>
-                    <button class="error-button" onclick="loadPromos()">
+                    <h3 class="empty-title">Aucune promotion trouvée</h3>
+                    <p class="empty-text">Essayez de modifier vos filtres de recherche ou réinitialisez-les pour voir toutes les offres disponibles.</p>
+                    <button class="empty-button" onclick="resetFilters()">
                         <i class="fas fa-redo-alt"></i>
-                        Réessayer
+                        Réinitialiser les filtres
                     </button>
                 </div>
             `;
+            return;
         }
 
-        // ===== FILTRAGE =====
+        const grid = document.createElement('div');
+        grid.className = 'promo-grid';
+        grid.innerHTML = promos.map(promo => generatePromoCard(promo)).join('');
+        
+        container.innerHTML = '';
+        container.appendChild(grid);
 
-        /**
-         * Applique les filtres de recherche
-         */
-        function applyFilters() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            const brandFilter = document.getElementById('brandFilter').value;
-            const influencerFilter = document.getElementById('influencerFilter').value;
-            const typeFilter = document.getElementById('typeFilter').value;
+        const cards = grid.querySelectorAll('.promo-card');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 50);
+        });
+    }
 
-            filteredPromos = allPromos.filter(promo => {
-                // Filtre de recherche
-                const matchesSearch = !searchTerm || 
-                    promo.nomMarque.toLowerCase().includes(searchTerm) ||
-                    promo.nomInfluenceur.toLowerCase().includes(searchTerm) ||
-                    promo.description.toLowerCase().includes(searchTerm);
+    function displayError(message) {
+        const container = document.getElementById('promoContainer');
+        container.innerHTML = `
+            <div class="error-state">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="error-title">Erreur de chargement</h3>
+                <p class="error-text">${escapeHtml(message)}</p>
+                <button class="error-button" onclick="loadPromos()">
+                    <i class="fas fa-redo-alt"></i>
+                    Réessayer
+                </button>
+            </div>
+        `;
+    }
 
-                // Filtre de marque
-                const matchesBrand = !brandFilter || promo.nomMarque === brandFilter;
+    // ===== FILTRAGE =====
 
-                // Filtre d'influenceur
-                const matchesInfluencer = !influencerFilter || promo.nomInfluenceur === influencerFilter;
+    function applyFilters() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+        const brandFilter = document.getElementById('brandFilter').value;
+        const influencerFilter = document.getElementById('influencerFilter').value;
+        const typeFilter = document.getElementById('typeFilter').value;
 
-                // Filtre de type
-                const matchesType = !typeFilter || 
-                    (typeFilter === 'code' && promo.estCodePromo) ||
-                    (typeFilter === 'link' && !promo.estCodePromo);
+        filteredPromos = allPromos.filter(promo => {
+            const matchesSearch = !searchTerm || 
+                promo.nomMarque.toLowerCase().includes(searchTerm) ||
+                promo.nomInfluenceur.toLowerCase().includes(searchTerm) ||
+                promo.description.toLowerCase().includes(searchTerm);
 
-                return matchesSearch && matchesBrand && matchesInfluencer && matchesType;
+            const matchesBrand = !brandFilter || promo.nomMarque === brandFilter;
+            const matchesInfluencer = !influencerFilter || promo.nomInfluenceur === influencerFilter;
+            const matchesType = !typeFilter || 
+                (typeFilter === 'code' && promo.estCodePromo) ||
+                (typeFilter === 'link' && !promo.estCodePromo);
+
+            return matchesSearch && matchesBrand && matchesInfluencer && matchesType;
+        });
+
+        displayPromos(filteredPromos);
+    }
+
+    function populateFilters() {
+        const brands = [...new Set(allPromos.map(p => p.nomMarque))].sort();
+        const brandSelect = document.getElementById('brandFilter');
+        brandSelect.innerHTML = '<option value="">Toutes les marques</option>' + 
+            brands.map(brand => `<option value="${escapeHtml(brand)}">${escapeHtml(brand)}</option>`).join('');
+
+        const influencers = [...new Set(allPromos.map(p => p.nomInfluenceur))].sort();
+        const influencerSelect = document.getElementById('influencerFilter');
+        influencerSelect.innerHTML = '<option value="">Tous les influenceurs</option>' + 
+            influencers.map(inf => `<option value="${escapeHtml(inf)}">${escapeHtml(inf)}</option>`).join('');
+    }
+
+    function resetFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('brandFilter').value = '';
+        document.getElementById('influencerFilter').value = '';
+        document.getElementById('typeFilter').value = '';
+        applyFilters();
+    }
+
+    // ===== STATISTIQUES =====
+
+    function updateStats() {
+        const totalPromos = allPromos.length;
+        const uniqueBrands = new Set(allPromos.map(p => p.nomMarque)).size;
+        const uniqueInfluencers = new Set(allPromos.map(p => p.nomInfluenceur)).size;
+
+        animateNumber(document.querySelector('.stat-item:nth-child(1) .stat-number'), totalPromos);
+        animateNumber(document.querySelector('.stat-item:nth-child(2) .stat-number'), uniqueBrands);
+        animateNumber(document.querySelector('.stat-item:nth-child(3) .stat-number'), uniqueInfluencers);
+    }
+
+    function animateNumber(element, end) {
+        if (!element) return;
+        
+        const duration = 1500;
+        const start = 0;
+        const increment = (end - start) / (duration / 16);
+        let current = start;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                current = end;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current);
+        }, 16);
+    }
+
+    // ===== CHARGEMENT DES DONNÉES =====
+
+    function validatePromo(promo, index) {
+        const required = ['nomMarque', 'description', 'nomInfluenceur', 'urlChaineInfluenceur'];
+        const missing = required.filter(field => !promo[field]);
+        
+        if (missing.length > 0) {
+            console.warn(`Promo ${index}: champs manquants:`, missing);
+            return false;
+        }
+
+        if (typeof promo.estCodePromo !== 'boolean') {
+            console.warn(`Promo ${index}: estCodePromo doit être un booléen`);
+            return false;
+        }
+
+        if (!promo.estCodePromo) {
+            if (!promo.lienPromo && promo.Url) {
+                promo.lienPromo = promo.Url;
+            }
+            if (!promo.lienPromo) {
+                console.warn(`Promo ${index}: lien promo manquant`);
+                return false;
+            }
+        }
+
+        if (promo.estCodePromo && !promo.codePromo) {
+            console.warn(`Promo ${index}: code promo manquant`);
+            return false;
+        }
+
+        return true;
+    }
+
+    async function loadPromos() {
+        try {
+            console.log('🔄 Chargement des promotions depuis:', CONFIG.JSON_FILE);
+            
+            const response = await fetch(CONFIG.JSON_FILE + '?t=' + Date.now());
+            
+            console.log('📡 Réponse HTTP:', response.status, response.statusText);
+            
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP: ${response.status} - ${response.statusText}`);
+            }
+
+            const text = await response.text();
+            console.log('📄 Contenu brut (premiers 200 caractères):', text.substring(0, 200));
+            
+            const data = JSON.parse(text);
+            console.log('📦 Données JSON parsées:', data);
+
+            if (!Array.isArray(data)) {
+                throw new Error('Le fichier JSON doit contenir un tableau');
+            }
+
+            allPromos = data
+                .map((promo, index) => ({
+                    ...promo,
+                    id: `promo-${index}`,
+                    logoInfluenceur: promo.logoInfluenceur || '',
+                    dateExpiration: promo.dateExpiration || null,
+                    Url: promo.Url || promo.lienPromo || ''
+                }))
+                .filter((promo, index) => validatePromo(promo, index));
+
+            console.log('✅ Promos validées:', allPromos.length, 'sur', data.length);
+
+            allPromos.sort((a, b) => {
+                const aExpired = isExpired(a.dateExpiration);
+                const bExpired = isExpired(b.dateExpiration);
+                
+                if (aExpired && !bExpired) return 1;
+                if (!aExpired && bExpired) return -1;
+                
+                if (!a.dateExpiration) return 1;
+                if (!b.dateExpiration) return -1;
+                
+                return new Date(a.dateExpiration) - new Date(b.dateExpiration);
             });
 
+            filteredPromos = [...allPromos];
+
+            populateFilters();
             displayPromos(filteredPromos);
+            updateStats();
+
+            console.log(`✅ ${allPromos.length} promotions chargées avec succès`);
+
+        } catch (error) {
+            console.error('❌ Erreur détaillée:', error);
+            console.error('❌ Stack:', error.stack);
+            displayError(`Impossible de charger les promotions: ${error.message}`);
+            showToast('Erreur de chargement des promotions', 'error');
         }
+    }
 
-        /**
-         * Remplit les filtres avec les données disponibles
-         */
-        function populateFilters() {
-            // Marques uniques
-            const brands = [...new Set(allPromos.map(p => p.nomMarque))].sort();
-            const brandSelect = document.getElementById('brandFilter');
-            brandSelect.innerHTML = '<option value="">Toutes les marques</option>' + 
-                brands.map(brand => `<option value="${escapeHtml(brand)}">${escapeHtml(brand)}</option>`).join('');
+    // ===== ÉVÉNEMENTS =====
 
-            // Influenceurs uniques
-            const influencers = [...new Set(allPromos.map(p => p.nomInfluenceur))].sort();
-            const influencerSelect = document.getElementById('influencerFilter');
-            influencerSelect.innerHTML = '<option value="">Tous les influenceurs</option>' + 
-                influencers.map(inf => `<option value="${escapeHtml(inf)}">${escapeHtml(inf)}</option>`).join('');
-        }
+    function initEventListeners() {
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(applyFilters, 300);
+        });
 
-        /**
-         * Réinitialise tous les filtres
-         */
-        function resetFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('brandFilter').value = '';
-            document.getElementById('influencerFilter').value = '';
-            document.getElementById('typeFilter').value = '';
-            applyFilters();
-        }
+        document.getElementById('brandFilter').addEventListener('change', applyFilters);
+        document.getElementById('influencerFilter').addEventListener('change', applyFilters);
+        document.getElementById('typeFilter').addEventListener('change', applyFilters);
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
 
-        // ===== STATISTIQUES =====
-
-        /**
-         * Met à jour les statistiques du header
-         */
-        function updateStats() {
-            const totalPromos = allPromos.length;
-            const activePromos = allPromos.filter(p => !isExpired(p.dateExpiration)).length;
-            const uniqueBrands = new Set(allPromos.map(p => p.nomMarque)).size;
-            const uniqueInfluencers = new Set(allPromos.map(p => p.nomInfluenceur)).size;
-
-            animateNumber(document.querySelector('.stat-item:nth-child(1) .stat-number'), totalPromos);
-            animateNumber(document.querySelector('.stat-item:nth-child(2) .stat-number'), uniqueBrands);
-            animateNumber(document.querySelector('.stat-item:nth-child(3) .stat-number'), uniqueInfluencers);
-        }
-
-        /**
-         * Anime un nombre de 0 à sa valeur finale
-         */
-        function animateNumber(element, end) {
-            if (!element) return;
-            
-            const duration = 1500;
-            const start = 0;
-            const increment = (end - start) / (duration / 16);
-            let current = start;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-                    current = end;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current);
-            }, 16);
-        }
-
-        // ===== CHARGEMENT DES DONNÉES =====
-
-        /**
-         * Valide la structure d'une promo
-         */
-        function validatePromo(promo, index) {
-            const required = ['nomMarque', 'description', 'nomInfluenceur', 'urlChaineInfluenceur'];
-            const missing = required.filter(field => !promo[field]);
-            
-            if (missing.length > 0) {
-                console.warn(`Promo ${index}: champs manquants:`, missing);
-                return false;
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
             }
 
-            if (typeof promo.estCodePromo !== 'boolean') {
-                console.warn(`Promo ${index}: estCodePromo doit être un booléen`);
-                return false;
+            if (e.key === 'Escape') {
+                resetFilters();
             }
+        });
 
-            // Auto-correction: utiliser Url si lienPromo est vide
-            if (!promo.estCodePromo) {
-                if (!promo.lienPromo && promo.Url) {
-                    promo.lienPromo = promo.Url;
-                }
-                if (!promo.lienPromo) {
-                    console.warn(`Promo ${index}: lien promo manquant`);
-                    return false;
-                }
-            }
+        window.addEventListener('online', () => {
+            showToast('Connexion rétablie', 'success');
+        });
 
-            // Validation code promo
-            if (promo.estCodePromo && !promo.codePromo) {
-                console.warn(`Promo ${index}: code promo manquant`);
-                return false;
-            }
+        window.addEventListener('offline', () => {
+            showToast('Mode hors-ligne activé', 'error');
+        });
+    }
 
-            return true;
+    // ===== INITIALISATION =====
+
+    async function init() {
+        console.log('🚀 Initialisation de InfluPromo...');
+        console.log('📂 Fichier JSON:', CONFIG.JSON_FILE);
+        console.log('🌐 URL actuelle:', window.location.href);
+        
+        try {
+            initEventListeners();
+            await loadPromos();
+            console.log('✅ InfluPromo initialisé avec succès!');
+        } catch (error) {
+            console.error('❌ Erreur lors de l\'initialisation:', error);
         }
+    }
 
-        /**
-         * Charge les promotions depuis le fichier JSON
-         */
-        async function loadPromos() {
-            try {
-                console.log('🔄 Chargement des promotions...');
-                
-                const response = await fetch(CONFIG.JSON_FILE);
-                
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+</script>
 
-                const data = await response.json();
-                console.log('📦 Données brutes reçues:', data);
-
-                if (!Array.isArray(data)) {
-                    throw new Error('Le fichier JSON doit contenir un tableau');
-                }
-
-                // Filtrage et validation
-                allPromos = data
-                    .map((promo, index) => ({
-                        ...promo,
-                        id: `promo-${index}`,
-                        logoInfluenceur: promo.logoInfluenceur || '',
-                        dateExpiration: promo.dateExpiration || null,
-                        Url: promo.Url || promo.lienPromo || ''
-                    }))
-                    .filter((promo, index) => validatePromo(promo, index));
-
-                console.log('✅ Promos validées:', allPromos);
-
-                // Tri par date d'expiration
-                allPromos.sort((a, b) => {
-                    const aExpired = isExpired(a.dateExpiration);
-                    const bExpired = isExpired(b.dateExpiration);
-                    
-                    if (aExpired && !bExpired) return 1;
-                    if (!aExpired && bExpired) return -1;
-                    
-                    if (!a.dateExpiration) return 1;
-                    if (!b.dateExpiration) return -1;
-                    
-                    return new Date(a.dateExpiration) - new Date(b.dateExpiration);
-                });
-
-                filteredPromos = [...allPromos];
-
-                populateFilters();
-                displayPromos(filteredPromos);
-                updateStats();
-
-                console.log(`✅ ${allPromos.length} promotions chargées avec succès`);
-
-            } catch (error) {
-                console.error('❌ Erreur lors du chargement:', error);
-                displayError(`Impossible de charger les promotions: ${error.message}`);
-                showToast('Erreur de chargement des promotions', 'error');
-            }
-        }
-
-        // ===== ÉVÉNEMENTS =====
-
-        /**
-         * Initialise les écouteurs d'événements
-         */
-        function initEventListeners() {
-            // Recherche en temps réel avec debounce
-            let searchTimeout;
-            document.getElementById('searchInput').addEventListener('input', () => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(applyFilters, 300);
-            });
-
-            // Filtres
-            document.getElementById('brandFilter').addEventListener('change', applyFilters);
-            document.getElementById('influencerFilter').addEventListener('change', applyFilters);
-            document.getElementById('typeFilter').addEventListener('change', applyFilters);
-
-            // Réinitialisation
-            document.getElementById('resetFilters').addEventListener('click', resetFilters);
-
-            // Raccourcis clavier
-            document.addEventListener('keydown', (e) => {
-                // Ctrl/Cmd + K : focus sur la recherche
-                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                    e.preventDefault();
-                    document.getElementById('searchInput').focus();
-                }
-
-                // Échap : réinitialiser les filtres
-                if (e.key === 'Escape') {
-                    resetFilters();
-                }
-            });
-
-            // Détection de connexion
-            window.addEventListener('online', () => {
-                showToast('Connexion rétablie', 'success');
-            });
-
-            window.addEventListener('offline', () => {
-                showToast('Mode hors-ligne activé', 'error');
-            });
-        }
-
-        // ===== INITIALISATION =====
-
-        /**
-         * Point d'entrée de l'application
-         */
-        async function init() {
-            console.log('🚀 Initialisation de InfluPromo...');
-            
-            try {
-                initEventListeners();
-                await loadPromos();
-                console.log('✅ InfluPromo initialisé avec succès!');
-            } catch (error) {
-                console.error('❌ Erreur lors de l\'initialisation:', error);
-            }
-        }
-
-        // Démarrage de l'application
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-
-        // Service Worker pour le mode hors-ligne (optionnel)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Décommenter pour activer le service worker
-                // navigator.serviceWorker.register('/sw.js')
-                //     .then(reg => console.log('✅ Service Worker enregistré'))
-                //     .catch(err => console.log('❌ Erreur Service Worker:', err));
-            });
-        }
-    </script>
 </body>
 </html>
 
