@@ -15,9 +15,9 @@
     "description": "Vous pourrez obtenir 20 € et participer au tirage au sort pour gagner 5 000 € ! Voir conditions générales. Collaboration commerciale.",
     "estCodePromo": false,
     "codePromo": "",
-    "lienPromo": "https://get.revolut.com/z4lF/AMixem",  // Correction : URL dans lienPromo
+    "lienPromo": "https://get.revolut.com/z4lF/AMixem",  
     "urlChaineInfluenceur": "https://youtube.com/@runningpro",
-    "logoInfluenceur": "https://yt3.ggpht.com/ytc/AIdro_kBQ9JYlzQYq5vj3gJhXq1FZzD7qQJqJw3Q1A=s88-c-k-c0x00ffffff-no-rj",  // Logo corrigé
+    "logoInfluenceur": "https://yt3.ggpht.com/ytc/AIdro_kBQ9JYlzQYq5vj3gJhXq1FZzD7qQJqJw3Q1A=s88-c-k-c0x00ffffff-no-rj",  
     "nomInfluenceur": "Amixem",
     "dateExpiration": "2025-11-24"
   },
