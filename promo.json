@@ -192,6 +192,18 @@
     "nomInfluenceur": "Remontada",
     "dateExpiration": "2025-12-31",
     "Url": "https://nordvpn.com/remontada"
+  },
+  {
+    "nomMarque": "Bitdefender",
+    "description": "Testez Bitdefender Total Security gratuitement pendant 30 jours.",
+    "estCodePromo": false,
+    "codePromo": "",
+    "lienPromo": "http://bit.ly/42JmVWy",
+    "urlChaineInfluenceur": "https://www.youtube.com/@Sandozprod",
+    "logoInfluenceur": "https://yt3.ggpht.com/kOusct2zOxDDDt7K7FqXvulCNRlyb3Z9kj3SVAojTH6GrEjMsfqIMwsAnra-jhxmXxIavy2gIHE=s88-c-k-c0x00ffffff-no-rj",
+    "nomInfluenceur": "Sandoz",
+    "dateExpiration": "2025-12-31",
+    "Url": "https://www.bitdefender.com/"
   }
 
 
