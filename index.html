@@ -55,15 +55,14 @@
             --blur-md: 16px;
             --blur-lg: 24px;
             
-            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
-            --radius-xl: 20px;
-            --radius-2xl: 24px;
+            --radius-xl: 24px;
+            
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+            --transition-slow: 0.5s ease;
         }
 
         /* ===== RESET & BASE ===== */
@@ -115,25 +114,38 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--primary);
-            border-radius: 10px;
+            border-radius: 5px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-light);
+            background: var(--primary-dark);
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
         }
 
         /* ===== HEADER ===== */
         header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
             background: rgba(26, 31, 58, 0.8);
             backdrop-filter: blur(var(--blur-md));
             border-bottom: 1px solid var(--border);
-            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
         }
 
-        .header-container {
+        .header-content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 1.5rem 2rem;
@@ -143,51 +155,30 @@
             gap: 2rem;
         }
 
-        .logo {
+        .logo-section {
             display: flex;
             align-items: center;
             gap: 1rem;
-            text-decoration: none;
-            transition: var(--transition-base);
         }
 
-        .logo:hover {
-            transform: translateY(-2px);
-        }
-
-        .logo-icon {
+        .logo {
             width: 50px;
             height: 50px;
             background: var(--gradient-primary);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .logo-icon i {
             font-size: 1.5rem;
+            font-weight: 800;
             color: white;
-            z-index: 1;
+            box-shadow: var(--shadow-md);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .logo-text h1 {
@@ -198,92 +189,71 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.5px;
+            margin: 0;
         }
 
         .logo-text p {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
         }
 
         .header-stats {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
-        .stat-card {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: var(--radius-md);
-            padding: 0.75rem 1.25rem;
+        .stat-item {
             text-align: center;
-            transition: var(--transition-base);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: var(--transition-slow);
-        }
-
-        .stat-card:hover::before {
-            left: 100%;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
         }
 
         .stat-number {
-            display: block;
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 800;
-            font-family: 'Poppins', sans-serif;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: block;
             line-height: 1;
-            margin-bottom: 0.25rem;
         }
 
         .stat-label {
-            display: block;
             font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-weight: 600;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            margin-top: 0.25rem;
         }
 
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .header-stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
         }
 
-        /* ===== ADSENSE BANNER TOP ===== */
+        /* ===== ADSENSE BANNER ===== */
         .ad-banner {
             background: rgba(30, 39, 66, 0.5);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 1rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
+            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 120px;
             position: relative;
             overflow: hidden;
         }
@@ -300,18 +270,26 @@
 
         .ad-placeholder {
             color: var(--text-muted);
-            font-size: 0.875rem;
-            text-align: center;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ad-placeholder i {
+            font-size: 1.5rem;
+            color: var(--primary);
         }
 
         /* ===== FILTERS SECTION ===== */
         .filters-section {
-            background: var(--bg-card);
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(var(--blur-sm));
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
         }
@@ -328,33 +306,25 @@
 
         .filters-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
         }
 
         .section-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
             font-family: 'Poppins', sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .section-title i {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-primary);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.125rem;
+            color: var(--primary);
+            font-size: 1.25rem;
         }
 
         .search-wrapper {
@@ -365,269 +335,265 @@
 
         .search-icon {
             position: absolute;
-            left: 1.25rem;
+            left: 1rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 1.125rem;
+            font-size: 1rem;
             pointer-events: none;
-            transition: var(--transition-base);
         }
 
         #searchInput {
             width: 100%;
-            padding: 1rem 1.25rem 1rem 3.5rem;
-            background: var(--bg-secondary);
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            background: rgba(30, 39, 66, 0.8);
             border: 2px solid var(--border);
             border-radius: var(--radius-lg);
             color: var(--text-primary);
             font-size: 1rem;
-            font-weight: 500;
             transition: var(--transition-base);
         }
 
         #searchInput:focus {
             outline: none;
             border-color: var(--primary);
-            background: var(--bg-tertiary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
-        #searchInput:focus + .search-icon {
-            color: var(--primary);
+        #searchInput::placeholder {
+            color: var(--text-muted);
         }
 
         .filters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
         }
 
         .filter-group {
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .filter-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .filter-label i {
-            font-size: 0.875rem;
-            color: var(--primary);
+            color: var(--primary-light);
+            font-size: 0.9rem;
         }
 
         .filter-select {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: var(--bg-secondary);
+            padding: 0.75rem 1rem;
+            background: rgba(30, 39, 66, 0.8);
             border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             color: var(--text-primary);
-            font-size: 0.9375rem;
-            font-weight: 500;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: var(--transition-base);
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='%23cbd5e1'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            padding-right: 3rem;
-        }
-
-        .filter-select:hover {
-            border-color: var(--primary-light);
         }
 
         .filter-select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .filter-select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
         }
 
         .reset-button {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: rgba(239, 68, 68, 0.1);
-            border: 2px solid rgba(239, 68, 68, 0.3);
-            border-radius: var(--radius-lg);
-            color: var(--error);
-            font-size: 0.9375rem;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
             font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: var(--transition-base);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
-            margin-top: 1.875rem;
+            gap: 0.5rem;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-sm);
+            margin-top: auto;
         }
 
         .reset-button:hover {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: var(--error);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: var(--shadow-md);
         }
 
         .reset-button:active {
             transform: translateY(0);
         }
 
+        @media (max-width: 768px) {
+            .filters-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-wrapper {
+                max-width: 100%;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ===== PROMO GRID ===== */
         .promo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .promo-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         /* ===== PROMO CARD ===== */
         .promo-card {
-            background: var(--bg-card);
+            background: rgba(26, 31, 58, 0.8);
+            backdrop-filter: blur(var(--blur-sm));
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             overflow: hidden;
             transition: var(--transition-base);
-            position: relative;
+            box-shadow: var(--shadow-md);
             display: flex;
             flex-direction: column;
-            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .promo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition-base);
         }
 
         .promo-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-xl);
-            border-color: rgba(99, 102, 241, 0.3);
+            border-color: var(--primary-light);
         }
 
-        .promo-card.expired {
-            opacity: 0.6;
+        .promo-card:hover::before {
+            opacity: 1;
         }
 
-        .promo-card.expired::after {
-            content: 'EXPIRÉ';
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--error);
-            color: white;
-            padding: 0.375rem 1rem;
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            z-index: 10;
-            box-shadow: var(--shadow-md);
-        }
-
-        /* ===== CARD HEADER ===== */
+        /* Card Header */
         .card-header {
-            background: var(--gradient-primary);
-            padding: 1.75rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .brand-wrapper {
             display: flex;
             align-items: center;
-            gap: 1.25rem;
-            position: relative;
-            z-index: 1;
+            gap: 1rem;
         }
 
         .brand-logo-container {
-            width: 70px;
-            height: 70px;
-            background: white;
-            border-radius: var(--radius-lg);
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
             flex-shrink: 0;
+            border: 2px solid var(--border);
         }
 
         .brand-logo-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            padding: 10px;
+            object-fit: cover;
         }
 
         .brand-logo-fallback {
-            font-size: 1.75rem;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            color: white;
             font-weight: 800;
-            color: var(--primary);
+            font-size: 1.25rem;
         }
 
         .brand-info {
             flex: 1;
+            min-width: 0;
         }
 
         .brand-name {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.375rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: white;
-            margin-bottom: 0.25rem;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            margin: 0 0 0.25rem 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .brand-category {
-            display: inline-flex;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(var(--blur-sm));
-            padding: 0.375rem 0.875rem;
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* ===== CARD BODY ===== */
+        .brand-category i {
+            color: var(--primary-light);
+        }
+
+        /* Card Body */
         .card-body {
-            padding: 1.75rem;
+            padding: 1.5rem;
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
         }
 
         .promo-description {
-            font-size: 0.9375rem;
-            line-height: 1.7;
             color: var(--text-secondary);
-            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        /* ===== CODE PROMO SECTION ===== */
+        /* Code Promo Section */
         .code-section {
-            background: var(--bg-secondary);
-            border: 2px dashed var(--primary);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.3);
             border-radius: var(--radius-lg);
             padding: 1.5rem;
             position: relative;
@@ -641,7 +607,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--gradient-primary);
+            background: linear-gradient(90deg, var(--success) 0%, var(--accent) 100%);
         }
 
         .code-label {
@@ -651,7 +617,7 @@
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
-            color: var(--primary);
+            color: var(--success);
             margin-bottom: 1rem;
             letter-spacing: 1px;
         }
@@ -668,14 +634,14 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            background: rgba(10, 14, 39, 0.6);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
         }
 
         .code-text {
             flex: 1;
-            padding: 1rem 1.25rem;
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
             font-family: 'Courier New', monospace;
             font-size: 1.25rem;
             font-weight: 700;
@@ -683,15 +649,12 @@
             letter-spacing: 2px;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            transition: var(--transition-base);
         }
 
-        /* Effet de flou par défaut */
         .code-text.blurred {
             filter: blur(8px);
             user-select: none;
-            cursor: pointer;
+            pointer-events: none;
         }
 
         .code-text.blurred::after {
@@ -735,47 +698,42 @@
             background: rgba(99, 102, 241, 0.3);
         }
 
-        .reveal-icon {
-            width: 50px;
-            height: 50px;
+        .reveal-button {
+            padding: 0.75rem 1.5rem;
             background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.25rem;
-            box-shadow: var(--shadow-md);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
-            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
-        }
-
-        .reveal-text {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-align: center;
-        }
-
-        .copy-button {
-            padding: 1rem 1.5rem;
-            background: var(--success);
-            color: white;
             border: none;
             border-radius: var(--radius-md);
-            font-size: 0.9375rem;
+            color: white;
             font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: var(--transition-base);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-md);
+        }
+
+        .reveal-button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .copy-button {
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-sm);
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
         .copy-button:hover {
@@ -792,7 +750,7 @@
             background: var(--primary);
         }
 
-        /* ===== LINK PROMO SECTION ===== */
+        /* Link Promo Section */
         .link-section {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
             border: 2px solid rgba(245, 158, 11, 0.3);
@@ -824,79 +782,74 @@
             letter-spacing: 1px;
         }
 
+        .link-label i {
+            font-size: 1rem;
+        }
+
         .promo-link-button {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            width: 100%;
-            padding: 1.125rem 1.5rem;
-            background: var(--gradient-accent);
-            color: white;
-            text-decoration: none;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+            border: none;
             border-radius: var(--radius-md);
-            font-size: 1rem;
+            color: white;
             font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
             transition: var(--transition-base);
-            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .promo-link-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .promo-link-button:hover::before {
-            width: 300px;
-            height: 300px;
+            box-shadow: var(--shadow-md);
         }
 
         .promo-link-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.4);
+            box-shadow: var(--shadow-lg);
         }
 
-        .promo-link-button span {
-            position: relative;
-            z-index: 1;
+        .promo-link-button i {
+            transition: var(--transition-base);
         }
 
-        /* ===== CARD FOOTER ===== */
+        .promo-link-button:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Card Footer */
         .card-footer {
-            padding: 1.5rem 1.75rem;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
+            background: rgba(10, 14, 39, 0.3);
         }
 
         .influencer-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition-base);
             flex: 1;
+            min-width: 0;
+        }
+
+        .influencer-info:hover {
+            color: var(--primary-light);
         }
 
         .influencer-avatar {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             overflow: hidden;
             border: 2px solid var(--primary);
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            position: relative;
         }
 
         .influencer-avatar img {
@@ -908,66 +861,64 @@
         .influencer-avatar-fallback {
             width: 100%;
             height: 100%;
-            background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.125rem;
-            font-weight: 700;
+            background: var(--gradient-secondary);
             color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         .influencer-details {
-            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
         }
 
         .influencer-name {
-            font-size: 0.9375rem;
             font-weight: 600;
+            font-size: 0.95rem;
             color: var(--text-primary);
-            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .influencer-link {
-            display: inline-flex;
+        .influencer-handle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
             align-items: center;
-            gap: 0.375rem;
-            font-size: 0.8125rem;
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition-base);
-        }
-
-        .influencer-link:hover {
-            color: var(--primary-light);
-            gap: 0.625rem;
+            gap: 0.35rem;
         }
 
         .expiry-badge {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.625rem 1rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
+            padding: 0.5rem 0.875rem;
             border-radius: var(--radius-md);
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             font-weight: 600;
             white-space: nowrap;
-            transition: var(--transition-base);
+            flex-shrink: 0;
         }
 
         .expiry-badge.valid {
-            border-color: rgba(16, 185, 129, 0.3);
             background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
             color: var(--success);
         }
 
-        .expiry-badge.soon {
-            border-color: rgba(245, 158, 11, 0.3);
+        .expiry-badge.expiring {
             background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
             color: var(--warning);
-            animation: blink 2s infinite;
+        }
+
+        .expiry-badge.expiring i {
+            animation: blink 1.5s ease-in-out infinite;
         }
 
         @keyframes blink {
@@ -1002,7 +953,7 @@
             background: var(--gradient-secondary);
         }
 
-        /* ===== GRID AVEC SIDEBAR ===== */
+        /* ===== GRID WITH SIDEBAR ===== */
         .content-wrapper {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -1020,6 +971,31 @@
             }
         }
 
+        /* ===== ADSENSE BOTTOM ===== */
+        .ad-banner-bottom {
+            background: rgba(30, 39, 66, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            margin-top: 2rem;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-banner-bottom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+        }
+
         /* ===== LOADING STATE ===== */
         .loading-container {
             display: flex;
@@ -1027,16 +1003,16 @@
             align-items: center;
             justify-content: center;
             padding: 4rem 2rem;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .loader {
-            width: 80px;
-            height: 80px;
-            border: 5px solid var(--border);
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
             border-top-color: var(--primary);
             border-radius: 50%;
-            animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
@@ -1044,110 +1020,168 @@
         }
 
         .loading-text {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         /* ===== EMPTY STATE ===== */
-        .empty-container {
-            background: var(--bg-card);
-            border: 2px dashed var(--border);
-            border-radius: var(--radius-xl);
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 4rem 2rem;
             text-align: center;
+            gap: 1.5rem;
         }
 
         .empty-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2rem;
-            background: var(--gradient-primary);
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            background: rgba(99, 102, 241, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            opacity: 0.5;
-        }
-
-        .empty-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text-primary);
             margin-bottom: 1rem;
         }
 
-        .empty-description {
-            font-size: 1.125rem;
+        .empty-icon i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .empty-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .empty-text {
+            font-size: 1rem;
             color: var(--text-secondary);
             max-width: 500px;
-            margin: 0 auto;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .empty-button {
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-md);
+            margin-top: 1rem;
+        }
+
+        .empty-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         /* ===== ERROR STATE ===== */
-        .error-container {
-            background: rgba(239, 68, 68, 0.1);
-            border: 2px solid var(--error);
-            border-radius: var(--radius-xl);
-            padding: 3rem 2rem;
+        .error-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
             text-align: center;
+            gap: 1.5rem;
         }
 
         .error-icon {
             width: 80px;
             height: 80px;
-            margin: 0 auto 1.5rem;
-            background: var(--error);
             border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            animation: shake 0.5s;
+            margin-bottom: 1rem;
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+        .error-icon i {
+            font-size: 2.5rem;
+            color: var(--error);
         }
 
         .error-title {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            color: var(--error);
-            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            margin: 0;
         }
 
-        .error-description {
-            color: var(--text-secondary);
+        .error-text {
             font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            line-height: 1.6;
+            margin: 0;
         }
 
-        /* ===== TOAST NOTIFICATION ===== */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--success);
-            border-radius: var(--radius-lg);
-            padding: 1.25rem 1.5rem;
-            box-shadow: var(--shadow-xl);
+        .error-button {
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            min-width: 300px;
-            z-index: 10000;
-            animation: slideInRight 0.3s ease-out;
-            backdrop-filter: blur(var(--blur-md));
+            gap: 0.75rem;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-md);
+            margin-top: 1rem;
         }
 
-        @keyframes slideInRight {
+        .error-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== TOAST NOTIFICATIONS ===== */
+        .toast-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: rgba(26, 31, 58, 0.95);
+            backdrop-filter: blur(var(--blur-md));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-xl);
+            min-width: 300px;
+            max-width: 400px;
+            pointer-events: all;
+            animation: toastSlideIn 0.3s ease-out;
+        }
+
+        @keyframes toastSlideIn {
             from {
                 transform: translateX(400px);
                 opacity: 0;
@@ -1158,173 +1192,102 @@
             }
         }
 
-        .toast.success {
-            border-left-color: var(--success);
+        .toast.toast-out {
+            animation: toastSlideOut 0.3s ease-in;
         }
 
-        .toast.error {
-            border-left-color: var(--error);
-        }
-
-        .toast.warning {
-            border-left-color: var(--warning);
+        @keyframes toastSlideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
         }
 
         .toast-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.5rem;
             flex-shrink: 0;
-            font-size: 1.25rem;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
         }
 
         .toast.success .toast-icon {
-            background: rgba(16, 185, 129, 0.2);
             color: var(--success);
         }
 
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+
         .toast.error .toast-icon {
-            background: rgba(239, 68, 68, 0.2);
             color: var(--error);
         }
 
-        .toast-content {
-            flex: 1;
+        .toast.info {
+            border-left: 4px solid var(--primary);
         }
 
-        .toast-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
+        .toast.info .toast-icon {
+            color: var(--primary);
         }
 
         .toast-message {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
+            flex: 1;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .toast-container {
+                right: 1rem;
+                left: 1rem;
+            }
+
+            .toast {
+                min-width: auto;
+            }
         }
 
         /* ===== FOOTER ===== */
         footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
             margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: rgba(26, 31, 58, 0.5);
         }
 
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
-        .footer-section h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1.25rem;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            font-size: 0.9375rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
+        .footer-content a {
+            color: var(--primary-light);
             text-decoration: none;
             transition: var(--transition-base);
         }
 
-        .footer-section a:hover {
+        .footer-content a:hover {
             color: var(--primary);
         }
 
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 3rem auto 0;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .promo-grid {
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
             }
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1.5rem;
-                padding: 1.25rem 1rem;
-            }
-
-            .header-stats {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-
-            .stat-card {
-                flex: 1;
-                min-width: 100px;
-            }
-
-            .container {
-                padding: 2rem 1rem;
-            }
-
-            .filters-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-wrapper {
-                max-width: 100%;
-            }
-
-            .filters-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .promo-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .card-footer {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .expiry-badge {
-                align-self: flex-start;
-            }
-
-            .toast {
-                left: 1rem;
-                right: 1rem;
-                bottom: 1rem;
-                min-width: auto;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -1341,49 +1304,40 @@
             border-width: 0;
         }
 
-        button:focus-visible,
-        a:focus-visible,
-        input:focus-visible,
-        select:focus-visible {
-            outline: 3px solid var(--primary);
-            outline-offset: 3px;
-        }
-
-        /* ===== PRINT STYLES ===== */
-        @media print {
-            .filters-section,
-            .ad-banner,
-            .ad-sidebar,
-            footer {
-                display: none;
-            }
+        /* Focus styles */
+        *:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <!-- HEADER -->
     <header>
-        <div class="header-container">
-            <a href="/" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-gift"></i>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-percent"></i>
                 </div>
                 <div class="logo-text">
                     <h1>InfluPromo</h1>
                     <p>Tous les codes promo des influenceurs</p>
                 </div>
-            </a>
-            
+            </div>
+
             <div class="header-stats">
-                <div class="stat-card">
+                <div class="stat-item">
                     <span class="stat-number" id="totalPromos">0</span>
-                    <span class="stat-label">Promos Actives</span>
+                    <span class="stat-label">Promos actives</span>
                 </div>
-                <div class="stat-card">
+                <div class="stat-item">
                     <span class="stat-number" id="totalBrands">0</span>
                     <span class="stat-label">Marques</span>
                 </div>
-                <div class="stat-card">
+                <div class="stat-item">
                     <span class="stat-number" id="totalInfluencers">0</span>
                     <span class="stat-label">Influenceurs</span>
                 </div>
@@ -1424,7 +1378,7 @@
             <div class="filters-grid">
                 <div class="filter-group">
                     <label class="filter-label" for="brandFilter">
-                        <i class="fas fa-store"></i>
+                        <i class="fas fa-building"></i>
                         Marque
                     </label>
                     <select id="brandFilter" class="filter-select" aria-label="Filtrer par marque">
@@ -1434,7 +1388,7 @@
 
                 <div class="filter-group">
                     <label class="filter-label" for="influencerFilter">
-                        <i class="fas fa-user-tie"></i>
+                        <i class="fas fa-user-circle"></i>
                         Influenceur
                     </label>
                     <select id="influencerFilter" class="filter-select" aria-label="Filtrer par influenceur">
@@ -1473,18 +1427,18 @@
                 </div>
             </section>
 
-            <!-- ADSENSE SIDEBAR -->
-            <aside class="ad-sidebar">
+            <!-- ADSENSE SIDEBAR (hidden on mobile) -->
+            <aside class="ad-sidebar" aria-label="Publicité">
                 <!-- Insérer votre code AdSense ici -->
-                <!-- Format recommandé: 300x600 (Half Page) ou 300x250 (Rectangle) -->
+                <!-- Format recommandé: 300x600 (Half Page) ou 300x250 (Medium Rectangle) -->
                 <div class="ad-placeholder">
-                    <i class="fas fa-ad"></i> Espace publicitaire AdSense
+                    <i class="fas fa-ad"></i> AdSense Sidebar
                 </div>
             </aside>
         </div>
 
         <!-- ADSENSE BANNER BOTTOM -->
-        <div class="ad-banner" style="margin-top: 3rem;">
+        <div class="ad-banner-bottom">
             <!-- Insérer votre code AdSense ici -->
             <!-- Format recommandé: Responsive -->
             <div class="ad-placeholder">
@@ -1496,44 +1450,8 @@
     <!-- FOOTER -->
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>À propos</h3>
-                <p>InfluPromo regroupe tous les codes promo et offres exclusives des influenceurs en un seul endroit. Économisez sur vos achats préférés !</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Liens rapides</h3>
-                <div class="footer-links">
-                    <a href="#"><i class="fas fa-angle-right"></i> Toutes les promos</a>
-                    <a href="#"><i class="fas fa-angle-right"></i> Marques populaires</a>
-                    <a href="#"><i class="fas fa-angle-right"></i> Influenceurs</a>
-                    <a href="#"><i class="fas fa-angle-right"></i> Comment ça marche</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Légal</h3>
-                <div class="footer-links">
-                    <a href="#"><i class="fas fa-angle-right"></i> Conditions d'utilisation</a>
-                    <a href="#"><i class="fas fa-angle-right"></i> Politique de confidentialité</a>
-                    <a href="#"><i class="fas fa-angle-right"></i> Mentions légales</a>
-                    <a href="#"><i class="fas fa-angle-right"></i> Contact</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Suivez-nous</h3>
-                <div class="footer-links">
-                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-                    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-                    <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2024 InfluPromo - Tous droits réservés. Tous les codes promo des influenceurs réunis en un seul endroit.</p>
+            <p>&copy; 2024 InfluPromo. Tous droits réservés.</p>
+            <p>Trouvez les meilleures promotions de vos influenceurs préférés.</p>
         </div>
     </footer>
 
@@ -1628,41 +1546,32 @@
                 .map(word => word[0])
                 .join('')
                 .toUpperCase()
-                .slice(0, 2);
+                .substring(0, 2);
         }
 
         /**
-         * Affiche un toast de notification
+         * Affiche une notification toast
          */
-        function showToast(message, type = 'success') {
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast  $ {type}`;
             
-            const icon = document.createElement('div');
-            icon.className = 'toast-icon';
-            icon.innerHTML = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-circle"></i>';
+            const iconMap = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
             
-            const content = document.createElement('div');
-            content.className = 'toast-content';
+            toast.innerHTML = `
+                <i class="fas  $ {iconMap[type] || iconMap.info} toast-icon"></i>
+                <span class="toast-message"> $ {escapeHtml(message)}</span>
+            `;
             
-            const title = document.createElement('div');
-            title.className = 'toast-title';
-            title.textContent = type === 'success' ? 'Succès !' : 'Notification';
+            container.appendChild(toast);
             
-            const messageEl = document.createElement('div');
-            messageEl.className = 'toast-message';
-            messageEl.textContent = message;
-            
-            content.appendChild(title);
-            content.appendChild(messageEl);
-            
-            toast.appendChild(icon);
-            toast.appendChild(content);
-            
-            document.body.appendChild(toast);
-
             setTimeout(() => {
-                toast.style.animation = 'slideInRight 0.3s ease-out reverse';
+                toast.classList.add('toast-out');
                 setTimeout(() => toast.remove(), 300);
             }, CONFIG.TOAST_DURATION);
         }
@@ -1692,8 +1601,11 @@
          * Révèle le code promo
          */
         function revealCode(promoId) {
-            const codeElement = document.querySelector(`[data-promo-id=" $ {promoId}"] .code-text`);
-            const overlay = document.querySelector(`[data-promo-id=" $ {promoId}"] .reveal-overlay`);
+            const card = document.querySelector(`[data-promo-id=" $ {promoId}"]`);
+            if (!card) return;
+            
+            const codeElement = card.querySelector('.code-text');
+            const overlay = card.querySelector('.reveal-overlay');
             
             if (codeElement && overlay) {
                 codeElement.classList.remove('blurred');
@@ -1710,28 +1622,26 @@
         // ===== GÉNÉRATION DU HTML =====
 
         /**
-         * Génère le HTML d'une carte promo
+         * Génère le HTML pour une carte promo
          */
         function generatePromoCard(promo) {
             const logoUrl = getLogoUrl(promo.nomMarque);
-            const expired = isExpired(promo.dateExpiration);
-            const expiringSoon = isExpiringSoon(promo.dateExpiration);
+            const influencerInitials = getInitials(promo.nomInfluenceur);
             
+            // Détermination du statut d'expiration
             let expiryClass = 'valid';
             let expiryIcon = '<i class="fas fa-check-circle"></i>';
             
-            if (expired) {
+            if (isExpired(promo.dateExpiration)) {
                 expiryClass = 'expired';
                 expiryIcon = '<i class="fas fa-times-circle"></i>';
-            } else if (expiringSoon) {
-                expiryClass = 'soon';
-                expiryIcon = '<i class="fas fa-exclamation-triangle"></i>';
+            } else if (isExpiringSoon(promo.dateExpiration)) {
+                expiryClass = 'expiring';
+                expiryIcon = '<i class="fas fa-exclamation-circle"></i>';
             }
 
-            const influencerInitials = getInitials(promo.nomInfluenceur);
-
             return `
-                <article class="promo-card  $ {expired ? 'expired' : ''}" data-promo-id=" $ {promo.id}">
+                <article class="promo-card" data-promo-id=" $ {promo.id}">
                     <!-- Header -->
                     <div class="card-header">
                         <div class="brand-wrapper">
@@ -1775,17 +1685,30 @@
                                             onclick="copyToClipboard(' $ {escapeHtml(promo.codePromo)}', this)"
                                             aria-label="Copier le code  $ {escapeHtml(promo.codePromo)}"
                                         >
-                                                                                            <i class="fas fa-copy"></i>
+                                            <i class="fas fa-copy"></i>
                                             Copier
                                         </button>
                                     </div>
-                                    <div class="reveal-overlay" onclick="revealCode('${promo.id}')">
+                                    <div class="reveal-overlay" onclick="revealCode(' $ {promo.id}')">
                                         <button class="reveal-button">
                                             <i class="fas fa-eye"></i>
                                             Révéler le code
                                         </button>
                                     </div>
                                 </div>
+                                 $ {promo.Url ? `
+                                    <a 
+                                        href=" $ {escapeHtml(promo.Url)}" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        class="promo-link-button"
+                                        style="margin-top: 1rem;"
+                                        aria-label="Accéder au site de  $ {escapeHtml(promo.nomMarque)}"
+                                    >
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Aller sur le site
+                                    </a>
+                                ` : ''}
                             </div>
                         ` : `
                             <div class="link-section">
@@ -1794,11 +1717,11 @@
                                     Lien Promotionnel
                                 </div>
                                 <a 
-                                    href="${escapeHtml(promo.lienPromo)}" 
+                                    href=" $ {escapeHtml(promo.lienPromo || promo.Url)}" 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
                                     class="promo-link-button"
-                                    aria-label="Accéder à l'offre de ${escapeHtml(promo.nomMarque)}"
+                                    aria-label="Accéder à l'offre de  $ {escapeHtml(promo.nomMarque)}"
                                 >
                                     <i class="fas fa-arrow-right"></i>
                                     Accéder à l'offre
@@ -1810,29 +1733,29 @@
                     <!-- Footer -->
                     <div class="card-footer">
                         <a 
-                            href="${escapeHtml(promo.urlChaineInfluenceur)}" 
+                            href=" $ {escapeHtml(promo.urlChaineInfluenceur)}" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             class="influencer-info"
                         >
                             <div class="influencer-avatar">
-                                ${promo.logoInfluenceur ? `
+                                 $ {promo.logoInfluenceur ? `
                                     <img 
-                                        src="${escapeHtml(promo.logoInfluenceur)}" 
-                                        alt="${escapeHtml(promo.nomInfluenceur)}"
+                                        src=" $ {escapeHtml(promo.logoInfluenceur)}" 
+                                        alt=" $ {escapeHtml(promo.nomInfluenceur)}"
                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                                     >
                                     <div class="influencer-avatar-fallback" style="display: none;">
-                                        ${influencerInitials}
+                                         $ {influencerInitials}
                                     </div>
                                 ` : `
                                     <div class="influencer-avatar-fallback">
-                                        ${influencerInitials}
+                                         $ {influencerInitials}
                                     </div>
                                 `}
                             </div>
                             <div class="influencer-details">
-                                <span class="influencer-name">${escapeHtml(promo.nomInfluenceur)}</span>
+                                <span class="influencer-name"> $ {escapeHtml(promo.nomInfluenceur)}</span>
                                 <span class="influencer-handle">
                                     <i class="fas fa-link"></i>
                                     Voir la chaîne
@@ -1840,9 +1763,9 @@
                             </div>
                         </a>
                         
-                        <div class="expiry-badge ${expiryClass}">
-                            ${expiryIcon}
-                            <span>${formatDate(promo.dateExpiration)}</span>
+                        <div class="expiry-badge  $ {expiryClass}">
+                             $ {expiryIcon}
+                            <span> $ {formatDate(promo.dateExpiration)}</span>
                         </div>
                     </div>
                 </article>
@@ -1945,7 +1868,23 @@
             });
 
             displayPromos(filteredPromos);
-            updateStats();
+        }
+
+        /**
+         * Remplit les filtres avec les données disponibles
+         */
+        function populateFilters() {
+            // Marques uniques
+            const brands = [...new Set(allPromos.map(p => p.nomMarque))].sort();
+            const brandSelect = document.getElementById('brandFilter');
+            brandSelect.innerHTML = '<option value="">Toutes les marques</option>' + 
+                brands.map(brand => `<option value="${escapeHtml(brand)}">${escapeHtml(brand)}</option>`).join('');
+
+            // Influenceurs uniques
+            const influencers = [...new Set(allPromos.map(p => p.nomInfluenceur))].sort();
+            const influencerSelect = document.getElementById('influencerFilter');
+            influencerSelect.innerHTML = '<option value="">Tous les influenceurs</option>' + 
+                influencers.map(inf => `<option value="${escapeHtml(inf)}">${escapeHtml(inf)}</option>`).join('');
         }
 
         /**
@@ -1956,62 +1895,34 @@
             document.getElementById('brandFilter').value = '';
             document.getElementById('influencerFilter').value = '';
             document.getElementById('typeFilter').value = '';
-            
-            filteredPromos = [...allPromos];
-            displayPromos(filteredPromos);
-            updateStats();
-            
-            showToast('Filtres réinitialisés', 'success');
+            applyFilters();
         }
 
-        /**
-         * Remplit les options des filtres
-         */
-        function populateFilters() {
-            // Marques uniques
-            const brands = [...new Set(allPromos.map(p => p.nomMarque))].sort();
-            const brandFilter = document.getElementById('brandFilter');
-            brands.forEach(brand => {
-                const option = document.createElement('option');
-                option.value = brand;
-                option.textContent = brand;
-                brandFilter.appendChild(option);
-            });
-
-            // Influenceurs uniques
-            const influencers = [...new Set(allPromos.map(p => p.nomInfluenceur))].sort();
-            const influencerFilter = document.getElementById('influencerFilter');
-            influencers.forEach(influencer => {
-                const option = document.createElement('option');
-                option.value = influencer;
-                option.textContent = influencer;
-                influencerFilter.appendChild(option);
-            });
-        }
+        // ===== STATISTIQUES =====
 
         /**
-         * Met à jour les statistiques dans le header
+         * Met à jour les statistiques du header
          */
         function updateStats() {
-            const activePromos = filteredPromos.filter(p => !isExpired(p.dateExpiration));
-            const brands = new Set(filteredPromos.map(p => p.nomMarque));
-            const influencers = new Set(filteredPromos.map(p => p.nomInfluenceur));
+            const totalPromos = allPromos.length;
+            const activePromos = allPromos.filter(p => !isExpired(p.dateExpiration)).length;
+            const uniqueBrands = new Set(allPromos.map(p => p.nomMarque)).size;
+            const uniqueInfluencers = new Set(allPromos.map(p => p.nomInfluenceur)).size;
 
-            // Animation des chiffres
-            animateValue('totalPromos', 0, activePromos.length, 1000);
-            animateValue('totalBrands', 0, brands.size, 1200);
-            animateValue('totalInfluencers', 0, influencers.size, 1400);
+            animateNumber(document.querySelector('.stat-item:nth-child(1) .stat-number'), totalPromos);
+            animateNumber(document.querySelector('.stat-item:nth-child(2) .stat-number'), uniqueBrands);
+            animateNumber(document.querySelector('.stat-item:nth-child(3) .stat-number'), uniqueInfluencers);
         }
 
         /**
-         * Anime un chiffre de start à end
+         * Anime un nombre de 0 à sa valeur finale
          */
-        function animateValue(id, start, end, duration) {
-            const element = document.getElementById(id);
+        function animateNumber(element, end) {
             if (!element) return;
-
-            const range = end - start;
-            const increment = range / (duration / 16);
+            
+            const duration = 1500;
+            const start = 0;
+            const increment = (end - start) / (duration / 16);
             let current = start;
 
             const timer = setInterval(() => {
@@ -2043,22 +1954,20 @@
                 return false;
             }
 
-            // Auto-correction: lien dans codePromo
-            if (!promo.estCodePromo && !promo.lienPromo && promo.codePromo && String(promo.codePromo).trim().startsWith('http')) {
-                console.warn(`Promo ${index}: auto-correction - lien déplacé vers lienPromo`);
-                promo.lienPromo = String(promo.codePromo).trim();
-                promo.codePromo = '';
+            // Auto-correction: utiliser Url si lienPromo est vide
+            if (!promo.estCodePromo) {
+                if (!promo.lienPromo && promo.Url) {
+                    promo.lienPromo = promo.Url;
+                }
+                if (!promo.lienPromo) {
+                    console.warn(`Promo ${index}: lien promo manquant`);
+                    return false;
+                }
             }
 
             // Validation code promo
             if (promo.estCodePromo && !promo.codePromo) {
                 console.warn(`Promo ${index}: code promo manquant`);
-                return false;
-            }
-
-            // Validation lien promo
-            if (!promo.estCodePromo && !promo.lienPromo) {
-                console.warn(`Promo ${index}: lien promo manquant`);
                 return false;
             }
 
@@ -2079,6 +1988,7 @@
                 }
 
                 const data = await response.json();
+                console.log('📦 Données brutes reçues:', data);
 
                 if (!Array.isArray(data)) {
                     throw new Error('Le fichier JSON doit contenir un tableau');
@@ -2090,9 +2000,12 @@
                         ...promo,
                         id: `promo-${index}`,
                         logoInfluenceur: promo.logoInfluenceur || '',
-                        dateExpiration: promo.dateExpiration || null
+                        dateExpiration: promo.dateExpiration || null,
+                        Url: promo.Url || promo.lienPromo || ''
                     }))
                     .filter((promo, index) => validatePromo(promo, index));
+
+                console.log('✅ Promos validées:', allPromos);
 
                 // Tri par date d'expiration
                 allPromos.sort((a, b) => {
@@ -2105,7 +2018,7 @@
                     if (!a.dateExpiration) return 1;
                     if (!b.dateExpiration) return -1;
                     
-                    return new Date(b.dateExpiration) - new Date(a.dateExpiration);
+                    return new Date(a.dateExpiration) - new Date(b.dateExpiration);
                 });
 
                 filteredPromos = [...allPromos];
@@ -2123,25 +2036,36 @@
             }
         }
 
-        // ===== EVENT LISTENERS =====
+        // ===== ÉVÉNEMENTS =====
 
+        /**
+         * Initialise les écouteurs d'événements
+         */
         function initEventListeners() {
+            // Recherche en temps réel avec debounce
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(applyFilters, 300);
+            });
+
             // Filtres
-            document.getElementById('searchInput').addEventListener('input', applyFilters);
             document.getElementById('brandFilter').addEventListener('change', applyFilters);
             document.getElementById('influencerFilter').addEventListener('change', applyFilters);
             document.getElementById('typeFilter').addEventListener('change', applyFilters);
+
+            // Réinitialisation
             document.getElementById('resetFilters').addEventListener('click', resetFilters);
 
             // Raccourcis clavier
             document.addEventListener('keydown', (e) => {
-                // Ctrl/Cmd + K pour focus sur la recherche
+                // Ctrl/Cmd + K : focus sur la recherche
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
                     document.getElementById('searchInput').focus();
                 }
-                
-                // Echap pour réinitialiser les filtres
+
+                // Échap : réinitialiser les filtres
                 if (e.key === 'Escape') {
                     resetFilters();
                 }
@@ -2194,4 +2118,3 @@
 </body>
 </html>
 
-                                
