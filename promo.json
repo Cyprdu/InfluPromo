@@ -26,9 +26,9 @@
     "description": "Vous pourrez obtenir 20 € et participer au tirage au sort pour gagner 5 000 €",
     "estCodePromo": false,
     "codePromo": "",
-    "lienPromo": "https://get.revolut.com/z4lF/JoyCa",  // OK
+    "lienPromo": "https://get.revolut.com/z4lF/JoyCa",  
     "urlChaineInfluenceur": "https://youtube.com/@sneakerhead",
-    "logoInfluenceur": "https://yt3.ggpht.com/F5R-8dCR4OsDu1Rs_2RE20e6LUNFDJW6VemSqToit8XvdfoSj1DXJXb0Dc4aT_YEv-5TsFCF=s88-c-k-c0x00ffffff-no-rj",  // OK
+    "logoInfluenceur": "https://yt3.ggpht.com/F5R-8dCR4OsDu1Rs_2RE20e6LUNFDJW6VemSqToit8XvdfoSj1DXJXb0Dc4aT_YEv-5TsFCF=s88-c-k-c0x00ffffff-no-rj",
     "nomInfluenceur": "Joyca",
     "dateExpiration": "2025-11-24"
   },
